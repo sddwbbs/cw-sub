@@ -40,6 +40,9 @@ protected:
 private slots:
     // Метод проверяет было ли редактирование текста
     void documentWasModified();
+//    void slotEditRecord();
+//    void slotRemoveRecord();
+    void slotCustomMenuRequested(QPoint pos);
 
 private:
     // Проверка нужно ли сохранить документ

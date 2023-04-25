@@ -68,8 +68,15 @@ bool MdiChildTable::loadFile(const QString &fileName)
     file.close();
 
     QApplication::restoreOverrideCursor();
-    setWindowTitle(curFile);
+    setWindowTitle(userFriendlyCurrentFile());
+
     this->setModel(tableModel);
+    this->resizeColumnsToContents();
+
+    // Ставим контекстное меню
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(slotCustomMenuRequested(QPoint)));
     return true;
 }
 
@@ -131,6 +138,24 @@ void MdiChildTable::documentWasModified()
 
 }
 
+// Слот для вызова контекстного меню
+void MdiChildTable::slotCustomMenuRequested(QPoint pos)
+{
+    /* Создаем объект контекстного меню */
+    QMenu * menu = new QMenu(this);
+    /* Создаём действия для контекстного меню */
+    QAction * editDevice = new QAction(trUtf8("Редактировать"), this);
+    QAction * deleteDevice = new QAction(trUtf8("Удалить"), this);
+    /* Подключаем СЛОТы обработчики для действий контекстного меню */
+    connect(editDevice, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+    connect(deleteDevice, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+    /* Устанавливаем действия в меню */
+    menu->addAction(editDevice);
+    menu->addAction(deleteDevice);
+    /* Вызываем контекстное меню */
+    menu->popup(this->viewport()->mapToGlobal(pos));
+}
+
 // Проверка, надо ли сохранять файл
 bool MdiChildTable::maybeSave()
 {
@@ -145,7 +170,7 @@ void MdiChildTable::setCurrentFile(const QString &fileName)
     setWindowModified(false);
     // Используя новое имя файла надо обновить признак редактирования
     // в заголовке дочернего окна
-//    setWindowTitle(userFriendlyCurrentFile());
+    setWindowTitle(userFriendlyCurrentFile());
 }
 
 
