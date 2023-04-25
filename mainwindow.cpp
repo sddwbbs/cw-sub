@@ -10,6 +10,7 @@
 #include <QTableView>
 #include <QCloseEvent>
 #include <QMdiSubWindow>
+#include <QSettings>
 #include "mdichild.h"
 #include "mdichildTable.h"
 
@@ -40,21 +41,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Задаём заголовок окна. Его так же можно через свойства формы
     // в файле mainwindow.ui задать
-    setWindowTitle(tr("Application MDI"));
+    setWindowTitle(tr("My MDI Application"));
 
     //Делаем окно по центру
-    QDesktopWidget desktop;
-    QRect rect = desktop.availableGeometry(this);
-    QPoint center = rect.center();
-    int x = center.x() - (width()/2);
-    int y = center.y() - (height()/2);
-    center.setX(x);
-    center.setY(y);
-    move(center);
+//    QDesktopWidget desktop;
+//    QRect rect = desktop.availableGeometry(this);
+//    QPoint center = rect.center();
+//    int x = center.x() - (width()/2);
+//    int y = center.y() - (height()/2);
+//    center.setX(x);
+//    center.setY(y);
+//    move(center);
+
+    readSettings();
 }
 
 MainWindow::~MainWindow()
 {
+    writeSettings();
     delete ui;
 }
 
@@ -297,4 +301,34 @@ QMdiSubWindow *MainWindow::findMdiChildTable(const QString &fileName)
 
     // На случай если окно не нашлось
     return nullptr;
+}
+
+void MainWindow::readSettings()
+{
+    QSettings settings("MySoft", "MyProgram");
+
+    // Существует несколько способов работы с сохраняемыми параметрами
+    // Первый, каждый параметр независим:
+    //    restoreGeometry(settings.value("geometryMainWindow").toByteArray());
+    // Второй, параметры объединяются в группы:
+
+    // Для примера сделаем группу сохраняющую параметры окна MainWindow
+    settings.beginGroup("MainWindowGeometry"); // начало группы
+    resize(settings.value("size", QSize(400, 400)).toSize()); // сбрасываем размеры окна
+    move(settings.value("position", QPoint(200, 200)).toPoint()); // сбрасываем крайнюю левую верхнюю точку
+    settings.endGroup(); // конец группы
+}
+
+void MainWindow::writeSettings()
+{
+    QSettings settings("MySoft", "MyProgram");
+
+    // Запись значений также как и чтение либо по одному, либо по группам
+    // Пример по одному:
+    //    settings.setValue("geometryMainWindow", saveGeometry());
+    // Пример по группам MainWindowGeometry и MainWindowCheckBox:
+    settings.beginGroup("MainWindowGeometry");
+    settings.setValue("size", size());
+    settings.setValue("position", pos());
+    settings.endGroup();
 }
