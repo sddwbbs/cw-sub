@@ -73,10 +73,16 @@ bool MdiChildTable::loadFile(const QString &fileName)
     this->setModel(tableModel);
     this->resizeColumnsToContents();
 
-    // Ставим контекстное меню
+    // Ставим контекстное меню для ячеек
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(slotCustomMenuRequested(QPoint)));
+
+    // Ставим контекстное меню для строк
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this->horizontalHeader(), SIGNAL(customContextMenuRequestedRow(QPoint)),
+            this, SLOT(slotCustomMenuRequestedRow(QPoint)));
+
     return true;
 }
 
@@ -138,21 +144,36 @@ void MdiChildTable::documentWasModified()
 
 }
 
-// Слот для вызова контекстного меню
+// Слот для вызова контекстного меню ячейки
 void MdiChildTable::slotCustomMenuRequested(QPoint pos)
 {
+
     /* Создаем объект контекстного меню */
     QMenu * menu = new QMenu(this);
     /* Создаём действия для контекстного меню */
-    QAction * editDevice = new QAction(trUtf8("Редактировать"), this);
-    QAction * deleteDevice = new QAction(trUtf8("Удалить"), this);
+    QAction * editCell = new QAction(trUtf8("Редактировать"), this);
+    QAction * deleteCell = new QAction(trUtf8("Удалить"), this);
     /* Подключаем СЛОТы обработчики для действий контекстного меню */
-    connect(editDevice, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
-    connect(deleteDevice, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+    connect(editCell, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+    connect(deleteCell, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
     /* Устанавливаем действия в меню */
-    menu->addAction(editDevice);
-    menu->addAction(deleteDevice);
+    menu->addAction(editCell);
+    menu->addAction(deleteCell);
     /* Вызываем контекстное меню */
+    menu->popup(this->viewport()->mapToGlobal(pos));
+}
+
+// Слот для вызова контекстного меню строки
+void MdiChildTable::slotCustomMenuRequestedRow(QPoint pos)
+{
+    // Получаем номер выбранной строки
+    int row = this->rowAt(pos.y());
+
+    // Если строка выбрана, то показываем контекстное меню
+    QMenu *menu = new QMenu(this);
+    QAction * deleteRow = new QAction(trUtf8("Удалить"), this);
+    connect(deleteRow, SIGNAL(triggered()), this, SLOT(slotRemoveRecord()));
+    menu->addAction(deleteRow);
     menu->popup(this->viewport()->mapToGlobal(pos));
 }
 

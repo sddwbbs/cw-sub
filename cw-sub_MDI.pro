@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     SubcontractsClass.cpp \
     SubcontractsModel.cpp \
+    about.cpp \
     main.cpp \
     mainwindow.cpp \
     mdichild.cpp \
@@ -19,11 +20,13 @@ SOURCES += \
 HEADERS += \
     SubcontractsClass.h \
     SubcontractsModel.h \
+    about.h \
     mainwindow.h \
     mdichild.h \
     mdichildTable.h
 
 FORMS += \
+    about.ui \
     mainwindow.ui
 
 # Default rules for deployment.

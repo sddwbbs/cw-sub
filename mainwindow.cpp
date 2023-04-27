@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "about.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -11,6 +12,7 @@
 #include <QCloseEvent>
 #include <QMdiSubWindow>
 #include <QSettings>
+
 #include "mdichild.h"
 #include "mdichildTable.h"
 
@@ -42,16 +44,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Задаём заголовок окна. Его так же можно через свойства формы
     // в файле mainwindow.ui задать
     setWindowTitle(tr("My MDI Application"));
-
-    //Делаем окно по центру
-//    QDesktopWidget desktop;
-//    QRect rect = desktop.availableGeometry(this);
-//    QPoint center = rect.center();
-//    int x = center.x() - (width()/2);
-//    int y = center.y() - (height()/2);
-//    center.setX(x);
-//    center.setY(y);
-//    move(center);
 
     readSettings();
 }
@@ -332,3 +324,16 @@ void MainWindow::writeSettings()
     settings.setValue("position", pos());
     settings.endGroup();
 }
+
+void MainWindow::on_actionAbout_author_triggered()
+{
+    About aboutWnd(this);
+    aboutWnd.exec();
+}
+
+
+void MainWindow::on_lineEdit_textChanged(const QString &text)
+{
+    qDebug() << "Текст: " << text;
+}
+

@@ -43,6 +43,7 @@ private slots:
 //    void slotEditRecord();
 //    void slotRemoveRecord();
     void slotCustomMenuRequested(QPoint pos);
+    void slotCustomMenuRequestedRow(QPoint pos);
 
 private:
     // Проверка нужно ли сохранить документ

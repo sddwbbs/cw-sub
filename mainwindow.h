@@ -36,6 +36,10 @@ private slots:
     MdiChild *createMdiChild();
     MdiChildTable *createMdiChildTable();
 
+    void on_actionAbout_author_triggered();
+
+    void on_lineEdit_textChanged(const QString &arg1);
+
 protected:
     // Для вопроса о сохранении файла при закрытии главного окна,
     // если в одном из дочерних окон файл был изменён
