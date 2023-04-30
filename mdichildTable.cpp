@@ -5,6 +5,7 @@
 MdiChildTable::MdiChildTable(QWidget *parent):
     QTableView(parent)
     , tableModel(new MyTableModel(this))
+    , proxyModel(new QSortFilterProxyModel(this))
 {
     this->key = "10321";
 }
@@ -69,8 +70,11 @@ bool MdiChildTable::loadFile(const QString &fileName)
 
     QApplication::restoreOverrideCursor();
     setWindowTitle(userFriendlyCurrentFile());
+    this->setSortingEnabled(true);
 
-    this->setModel(tableModel);
+//    this->setModel(tableModel);
+    proxyModel->setSourceModel(tableModel);
+    this->setModel(proxyModel);
     this->resizeColumnsToContents();
 
     // Ставим контекстное меню для ячеек
@@ -119,6 +123,12 @@ bool MdiChildTable::saveAs()
 bool MdiChildTable::saveFile(const QString &fileName)
 {
     return true;
+}
+
+// Метод реализующий поиск по таблице
+void MdiChildTable::tableFind(QString text)
+{
+
 }
 
 // Оставим у файла только его имя. Убираем путь

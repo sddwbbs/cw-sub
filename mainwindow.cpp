@@ -187,7 +187,7 @@ MdiChild *MainWindow::createMdiChild()
 
 MdiChildTable *MainWindow::createMdiChildTable()
 {
-    // Создаём окно редактора
+    // Создаём окно таблицы
     MdiChildTable *child = new MdiChildTable;
     // Добавляем его в объект ui->mdiArea
     ui->mdiArea->addSubWindow(child);
@@ -334,6 +334,7 @@ void MainWindow::on_actionAbout_author_triggered()
 
 void MainWindow::on_lineEdit_textChanged(const QString &text)
 {
-    qDebug() << "Текст: " << text;
+    MdiChildTable *myTable = activeMdiChildTable();
+    myTable->tableFind(text);
 }
 

@@ -10,9 +10,12 @@
 #include <QTextStream>
 #include <QTableView>
 #include <QMdiSubWindow>
+#include <QSortFilterProxyModel>
 
 #include "SubcontractsClass.h"
 #include "SubcontractsModel.h"
+
+class QSortFilterProxyModel;
 
 // Воспользуемся классом для работы с текстом, но добавим несколько своих
 // методов, которые реализуют дополнительный возможности нужные нам.
@@ -31,6 +34,7 @@ public:
     bool saveAs();
     bool saveFile(const QString &fileName);
     QString currentFile() { return curFile; }
+    void tableFind(QString text);
 
 protected:
     // Для вопроса о сохранении файла при закрытии дочернего окна,
@@ -56,6 +60,7 @@ private:
     // Переменная хранит имя файла
     QString curFile;
     MyTableModel *tableModel;
+    QSortFilterProxyModel *proxyModel;
 };
 
 #endif // MDICHILDTABLE_H
