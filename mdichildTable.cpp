@@ -1,4 +1,4 @@
-#include <QtWidgets>
+﻿#include <QtWidgets>
 
 #include "mdichildTable.h"
 
@@ -72,7 +72,6 @@ bool MdiChildTable::loadFile(const QString &fileName)
     setWindowTitle(userFriendlyCurrentFile());
     this->setSortingEnabled(true);
 
-//    this->setModel(tableModel);
     proxyModel->setSourceModel(tableModel);
     this->setModel(proxyModel);
     this->resizeColumnsToContents();
@@ -89,7 +88,8 @@ bool MdiChildTable::loadFile(const QString &fileName)
 
     return true;
 }
-
+void slotEditRecord();
+void slotRemoveRecord();
 void MdiChildTable::initTable() {
     QList<Subcontracts> subctr = tableModel->getData();
 
@@ -165,7 +165,6 @@ void MdiChildTable::documentWasModified()
 // Слот для вызова контекстного меню ячейки
 void MdiChildTable::slotCustomMenuRequested(QPoint pos)
 {
-
     /* Создаем объект контекстного меню */
     QMenu * menu = new QMenu(this);
     /* Создаём действия для контекстного меню */

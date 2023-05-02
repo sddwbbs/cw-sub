@@ -12,6 +12,8 @@
 #include <QCloseEvent>
 #include <QMdiSubWindow>
 #include <QSettings>
+#include <QTranslator>
+#include <QActionGroup>
 
 #include "mdichild.h"
 #include "mdichildTable.h"
@@ -69,7 +71,12 @@ void MainWindow::newFile()
 // Открываем файл
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this);
+//    QString fileName = QFileDialog::getOpenFileName(this);
+    QFileDialog *fDialog = new QFileDialog(this);
+    fDialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    QString fileName = fDialog->getOpenFileName(this, tr("Open Document"), QDir::cleanPath("./.."),
+                                                "Text Files (*.txt *.db)", nullptr, QFileDialog::DontUseNativeDialog);
 
     QFileInfo fileinfo(fileName);
     QString ext = fileinfo.suffix();
