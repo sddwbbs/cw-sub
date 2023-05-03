@@ -44,12 +44,13 @@ protected:
 private slots:
     // Метод проверяет было ли редактирование текста
     void documentWasModified();
-//    void slotEditRecord();
-//    void slotRemoveRecord();
+    void slotEditRecord();
+    void slotRemoveRecord();
     void slotCustomMenuRequested(QPoint pos);
     void slotCustomMenuRequestedRow(QPoint pos);
 
 private:
+    void keyPressEvent(QKeyEvent *event);
     // Проверка нужно ли сохранить документ
     bool maybeSave();
     // Метод делает имя файла как текущий файл

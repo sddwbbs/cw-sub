@@ -8,6 +8,21 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     , proxyModel(new QSortFilterProxyModel(this))
 {
     this->key = "10321";
+    /* Устанавливаем фокус на таблицу */
+    this->setFocusPolicy(Qt::StrongFocus);
+    this->setFocus();
+
+    /* Подключаем СЛОТ-обработчик для удаления записи */
+    connect(this, SIGNAL(deleteKeyPressed()), this, SLOT(slotRemoveRecord()));
+}
+
+void MdiChildTable::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Delete) {
+        slotRemoveRecord();
+    } else {
+        QTableView::keyPressEvent(event);
+    }
 }
 
 // Стандартная загрузка файла
@@ -88,8 +103,7 @@ bool MdiChildTable::loadFile(const QString &fileName)
 
     return true;
 }
-void slotEditRecord();
-void slotRemoveRecord();
+
 void MdiChildTable::initTable() {
     QList<Subcontracts> subctr = tableModel->getData();
 
@@ -160,6 +174,23 @@ void MdiChildTable::closeEvent(QCloseEvent *event)
 void MdiChildTable::documentWasModified()
 {
 
+}
+
+void MdiChildTable::slotEditRecord()
+{
+
+}
+
+void MdiChildTable::slotRemoveRecord()
+{
+    /* Получаем индекс выбранной ячейки */
+    QModelIndex index = this->currentIndex();
+
+    /* Проверяем, что ячейка действительно выбрана */
+    if (index.isValid()) {
+        /* Очищаем содержимое ячейки */
+        this->model()->setData(index, QVariant());
+    }
 }
 
 // Слот для вызова контекстного меню ячейки
