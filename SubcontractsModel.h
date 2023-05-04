@@ -34,6 +34,7 @@ public:
 
     // Метод, вставляет новую строку "value" в модель
     bool insertRow(int position, const Subcontracts &value);
+    bool removeRow(const int position);
 
     // Метод, возвращает значение в заголовок таблицы
     QVariant headerData(int section,

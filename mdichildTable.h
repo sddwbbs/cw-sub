@@ -44,8 +44,9 @@ protected:
 private slots:
     // Метод проверяет было ли редактирование текста
     void documentWasModified();
-    void slotEditRecord();
-    void slotRemoveRecord();
+    void slotClearCell();
+    void slotAddRow();
+    void slotDeleteRow();
     void slotCustomMenuRequested(QPoint pos);
     void slotCustomMenuRequestedRow(QPoint pos);
 

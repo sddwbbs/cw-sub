@@ -131,6 +131,16 @@ bool MyTableModel::insertRow(int position, const Subcontracts &value)
     return true;
 }
 
+bool MyTableModel::removeRow(const int position)
+{
+    beginRemoveRows(QModelIndex(), position, position);
+
+    subctr.removeAt(position);
+
+    endRemoveRows();
+
+    return true;
+}
 
 // Задаём заголовки для столбцов и строк таблицы
 QVariant MyTableModel::headerData(int section,

@@ -19,7 +19,7 @@ MdiChildTable::MdiChildTable(QWidget *parent):
 void MdiChildTable::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Delete) {
-        slotRemoveRecord();
+        slotClearCell();
     } else {
         QTableView::keyPressEvent(event);
     }
@@ -176,12 +176,7 @@ void MdiChildTable::documentWasModified()
 
 }
 
-void MdiChildTable::slotEditRecord()
-{
-
-}
-
-void MdiChildTable::slotRemoveRecord()
+void MdiChildTable::slotClearCell()
 {
     /* Получаем индекс выбранной ячейки */
     QModelIndex index = this->currentIndex();
@@ -193,20 +188,48 @@ void MdiChildTable::slotRemoveRecord()
     }
 }
 
+void MdiChildTable::slotAddRow()
+{
+    int row = tableModel->rowCount();
+    Subcontracts newSubctr;
+    newSubctr.setName("");
+    newSubctr.setNumberEmpl(0);
+    newSubctr.setWorkload(0);
+    newSubctr.setLocation("");
+    newSubctr.setAdditionalServ(0);
+    newSubctr.setPrice(0);
+    newSubctr.setExperience(0);
+    newSubctr.setCompletedProjects(0);
+    newSubctr.setRating(0);
+
+    tableModel->insertRow(row, newSubctr);
+    initTable();
+}
+
+void MdiChildTable::slotDeleteRow()
+{
+    int row = this->currentIndex().row();
+    tableModel->removeRow(row);
+    initTable();
+}
+
 // Слот для вызова контекстного меню ячейки
 void MdiChildTable::slotCustomMenuRequested(QPoint pos)
 {
     /* Создаем объект контекстного меню */
     QMenu * menu = new QMenu(this);
     /* Создаём действия для контекстного меню */
-    QAction * editCell = new QAction(trUtf8("Редактировать"), this);
-    QAction * deleteCell = new QAction(trUtf8("Удалить"), this);
+    QAction * clearCell = new QAction(trUtf8("Очистить ячейку"), this);
+    QAction * addRow = new QAction(trUtf8("Добавить строку"), this);
+    QAction * deleteRow = new QAction(trUtf8("Удалить строку"), this);
     /* Подключаем СЛОТы обработчики для действий контекстного меню */
-    connect(editCell, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
-    connect(deleteCell, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+    connect(clearCell, SIGNAL(triggered()), this, SLOT(slotClearCell()));// Обработчик удаления записи
+    connect(addRow, SIGNAL(triggered()), this, SLOT(slotAddRow()));
+    connect(deleteRow, SIGNAL(triggered()), this, SLOT(slotDeleteRow()));
     /* Устанавливаем действия в меню */
-    menu->addAction(editCell);
-    menu->addAction(deleteCell);
+    menu->addAction(clearCell);
+    menu->addAction(addRow);
+    menu->addAction(deleteRow);
     /* Вызываем контекстное меню */
     menu->popup(this->viewport()->mapToGlobal(pos));
 }
