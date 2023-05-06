@@ -123,20 +123,61 @@ void MdiChildTable::initTable() {
 // При сохранении файла надо выяснить есть ли у него название
 bool MdiChildTable::save()
 {
-    return true;
+    return saveFile(curFile);;
 }
 
 // Сохранение файла через открытие диалогового окна сохранения файла,
 // если у него не было имени и пути
 bool MdiChildTable::saveAs()
 {
-    return true;
+    QFileDialog *fDialog = new QFileDialog(this);
+    fDialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    QString fileName = fDialog->getSaveFileName(this, tr("Save Document"), QDir::cleanPath("./.."), "Text Files (*.txt *.db)", nullptr, QFileDialog::DontUseNativeDialog);
+
+    if (fileName.isEmpty())
+        return false;
+
+    // Путь и имя получили, теперь делаем сохранение файла
+    return saveFile(fileName);
 }
 
 // Метод записывает файл из текстового потока
 bool MdiChildTable::saveFile(const QString &fileName)
 {
+    QFile file(fileName);
+
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this,
+                             tr("Application"),
+                             tr("Cannot write file %1:\n%2.")
+                                 .arg(fileName).arg(file.errorString()));
+        return false;
+    }
+
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    QTextStream out(&file);
+    QList<Subcontracts> subctr = tableModel->getData();
+
+    out << "10321" << "\n";
+
+    for (Subcontracts temp : subctr) {
+        out << temp.getName() << ";"
+            << temp.getNumberEmpl() << ";"
+            << temp.getWorkload() << ';'
+            << temp.getLocation() << ";"
+            << temp.getAdditionalServ() << ";"
+            << temp.getPrice() << ";"
+            << temp.getExperience() << ";"
+            << temp.getCompletedProjects() << ";"
+            << temp.getRating() << "\n";
+    }
+
+    QApplication::restoreOverrideCursor();
+
+    setCurrentFile(fileName);
     return true;
+
 }
 
 // Метод реализующий поиск по таблице

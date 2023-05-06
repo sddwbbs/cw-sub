@@ -40,6 +40,8 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &arg1);
 
+    void on_actionSaveAs_triggered();
+
 protected:
     // Для вопроса о сохранении файла при закрытии главного окна,
     // если в одном из дочерних окон файл был изменён

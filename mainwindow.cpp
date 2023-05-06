@@ -345,3 +345,10 @@ void MainWindow::on_lineEdit_textChanged(const QString &text)
     myTable->tableFind(text);
 }
 
+
+void MainWindow::on_actionSaveAs_triggered()
+{
+    MdiChildTable *myTable = activeMdiChildTable();
+    myTable->saveAs();
+}
+
