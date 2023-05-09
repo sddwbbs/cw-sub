@@ -181,17 +181,19 @@ bool MdiChildTable::saveFile(const QString &fileName)
 }
 
 // Метод реализующий поиск по таблице
-void MdiChildTable::tableFind(QString text)
+QModelIndex MdiChildTable::tableFind(const QString &text)
 {
-    int column = this->currentIndex().column();
-    // Создаем регулярное выражение для поиска
-    QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::FixedString);
+    QModelIndex index = currentIndex();
 
-    // Устанавливаем регулярное выражение как фильтр для модели
-    proxyModel->setFilterRegExp(regExp);
+    proxyModel->setFilterKeyColumn(index.column());
+    proxyModel->setFilterFixedString(text);
 
-    // Устанавливаем фильтр на все столбцы
-    proxyModel->setFilterKeyColumn(column);
+    return index;
+}
+
+void MdiChildTable::resetFind()
+{
+    proxyModel->setFilterFixedString(QString());
 }
 
 // Оставим у файла только его имя. Убираем путь

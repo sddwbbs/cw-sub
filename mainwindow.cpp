@@ -342,7 +342,15 @@ void MainWindow::on_actionAbout_author_triggered()
 void MainWindow::on_lineEdit_textChanged(const QString &text)
 {
     MdiChildTable *myTable = activeMdiChildTable();
-    myTable->tableFind(text);
+
+    if (!text.isEmpty()) {
+        if (myTable->currentIndex().isValid()) {
+            QModelIndex index = myTable->tableFind(text);
+            myTable->setCurrentIndex(index);
+        }
+    }
+    else
+        myTable->resetFind();
 }
 
 

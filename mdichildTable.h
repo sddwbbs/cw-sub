@@ -34,7 +34,8 @@ public:
     bool saveAs();
     bool saveFile(const QString &fileName);
     QString currentFile() { return curFile; }
-    void tableFind(QString text);
+    QModelIndex tableFind(const QString &text);
+    void resetFind();
 
 protected:
     // Для вопроса о сохранении файла при закрытии дочернего окна,
