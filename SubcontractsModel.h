@@ -27,6 +27,8 @@ public:
     QVariant data(const QModelIndex &index,
                   int role = Qt::DisplayRole) const override;
 
+    Qt::DropActions supportedDropActions() const override;
+
     // Метод, возвращает новое значение элемента из ячейки в список
     bool setData(const QModelIndex &index,
                  const QVariant &value,

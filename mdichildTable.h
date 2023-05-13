@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QTableView>
 #include <QMdiSubWindow>
+#include <QMetaObject>
 #include <QSortFilterProxyModel>
 
 #include "SubcontractsClass.h"
@@ -49,7 +50,6 @@ private slots:
     void slotAddRow();
     void slotDeleteRow();
     void slotCustomMenuRequested(QPoint pos);
-    void slotCustomMenuRequestedRow(QPoint pos);
 
 private:
     void keyPressEvent(QKeyEvent *event);
@@ -64,6 +64,7 @@ private:
     QString curFile;
     MyTableModel *tableModel;
     QSortFilterProxyModel *proxyModel;
+    int m_dropRow;
 };
 
 #endif // MDICHILDTABLE_H

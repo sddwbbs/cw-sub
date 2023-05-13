@@ -76,6 +76,11 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
 }
 
 
+Qt::DropActions MyTableModel::supportedDropActions() const
+{
+    return Qt::MoveAction | Qt::CopyAction;
+}
+
 // Делаем вставку, введённых пользователем данных из ячейки
 // в контейнеры "listStrA" и "listStrB",
 // и в переменную "time" записываем текущее время системы

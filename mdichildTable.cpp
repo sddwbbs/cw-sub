@@ -6,14 +6,21 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     QTableView(parent)
     , tableModel(new MyTableModel(this))
     , proxyModel(new QSortFilterProxyModel(this))
+    , m_dropRow(0)
 {
     this->key = "10321";
     /* Устанавливаем фокус на таблицу */
     this->setFocusPolicy(Qt::StrongFocus);
     this->setFocus();
 
-    /* Подключаем СЛОТ-обработчик для удаления записи */
-    connect(this, SIGNAL(deleteKeyPressed()), this, SLOT(slotRemoveRecord()));
+//    this->setDragEnabled(true);
+//    this->setAcceptDrops(true);
+//    this->setDropIndicatorShown(true);
+//    this->setDragDropMode(QAbstractItemView::InternalMove);
+
+    /* Подключаем СЛОТ-обработчик для очистки ячейки */
+    connect(this, &MdiChildTable::keyPressEvent,
+            this, &MdiChildTable::slotClearCell);
 }
 
 void MdiChildTable::keyPressEvent(QKeyEvent *event)
@@ -93,13 +100,8 @@ bool MdiChildTable::loadFile(const QString &fileName)
 
     // Ставим контекстное меню для ячеек
     this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
-            this, SLOT(slotCustomMenuRequested(QPoint)));
-
-    // Ставим контекстное меню для строк
-    this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this->horizontalHeader(), SIGNAL(customContextMenuRequestedRow(QPoint)),
-            this, SLOT(slotCustomMenuRequestedRow(QPoint)));
+    connect(this, &MdiChildTable::customContextMenuRequested,
+            this, &MdiChildTable::slotCustomMenuRequested);
 
     return true;
 }
@@ -177,7 +179,6 @@ bool MdiChildTable::saveFile(const QString &fileName)
 
     setCurrentFile(fileName);
     return true;
-
 }
 
 // Метод реализующий поиск по таблице
@@ -262,32 +263,24 @@ void MdiChildTable::slotCustomMenuRequested(QPoint pos)
     /* Создаем объект контекстного меню */
     QMenu * menu = new QMenu(this);
     /* Создаём действия для контекстного меню */
-    QAction * clearCell = new QAction(trUtf8("Очистить ячейку"), this);
-    QAction * addRow = new QAction(trUtf8("Добавить строку"), this);
-    QAction * deleteRow = new QAction(trUtf8("Удалить строку"), this);
+    QAction * clearCell = new QAction(("Очистить ячейку"), this);
+    QAction * addRow = new QAction(("Добавить строку"), this);
+    QAction * deleteRow = new QAction(("Удалить строку"), this);
+
     /* Подключаем СЛОТы обработчики для действий контекстного меню */
-    connect(clearCell, SIGNAL(triggered()), this, SLOT(slotClearCell()));// Обработчик удаления записи
-    connect(addRow, SIGNAL(triggered()), this, SLOT(slotAddRow()));
-    connect(deleteRow, SIGNAL(triggered()), this, SLOT(slotDeleteRow()));
+    connect(clearCell, &QAction::triggered,
+            this, &MdiChildTable::slotClearCell);
+    connect(addRow, &QAction::triggered,
+            this, &MdiChildTable::slotAddRow);
+    connect(deleteRow, &QAction::triggered,
+            this, &MdiChildTable::slotDeleteRow);
+
     /* Устанавливаем действия в меню */
     menu->addAction(clearCell);
     menu->addAction(addRow);
     menu->addAction(deleteRow);
+
     /* Вызываем контекстное меню */
-    menu->popup(this->viewport()->mapToGlobal(pos));
-}
-
-// Слот для вызова контекстного меню строки
-void MdiChildTable::slotCustomMenuRequestedRow(QPoint pos)
-{
-    // Получаем номер выбранной строки
-    int row = this->rowAt(pos.y());
-
-    // Если строка выбрана, то показываем контекстное меню
-    QMenu *menu = new QMenu(this);
-    QAction * deleteRow = new QAction(trUtf8("Удалить"), this);
-    connect(deleteRow, SIGNAL(triggered()), this, SLOT(slotRemoveRecord()));
-    menu->addAction(deleteRow);
     menu->popup(this->viewport()->mapToGlobal(pos));
 }
 
