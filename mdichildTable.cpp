@@ -13,11 +13,6 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     this->setFocusPolicy(Qt::StrongFocus);
     this->setFocus();
 
-//    this->setDragEnabled(true);
-//    this->setAcceptDrops(true);
-//    this->setDropIndicatorShown(true);
-//    this->setDragDropMode(QAbstractItemView::InternalMove);
-
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
     this->dragDropOverwriteMode();
     this->setDragEnabled(true);

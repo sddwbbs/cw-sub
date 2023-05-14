@@ -134,7 +134,6 @@ bool MyTableModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     return true;
 }
 
-
 bool MyTableModel::dragDropOverwtiteMode() const
 {
     return false;
@@ -253,7 +252,7 @@ Qt::ItemFlags MyTableModel::flags(const QModelIndex &index) const
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
 
     if (index.isValid())
-        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | Qt::ItemIsEditable | defaultFlags;
     else
         return Qt::ItemIsDropEnabled | defaultFlags;
 }
