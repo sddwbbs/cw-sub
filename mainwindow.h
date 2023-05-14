@@ -53,9 +53,11 @@ private:
     // Методы возвращающий указатель на активное дочернее окно
     MdiChild *activeMdiChild();
     MdiChildTable *activeMdiChildTable();
+    void updateActions();
     // Методы поиска окна по имени файла
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QMdiSubWindow *findMdiChildTable(const QString &fileName);
+    
     // Методы для сохранения и чтения настроек
     void readSettings();
     void writeSettings();

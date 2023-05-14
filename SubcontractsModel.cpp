@@ -4,6 +4,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QStandardItem>
+#include <QMimeData>
 
 using namespace std;
 
@@ -75,10 +76,73 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+QMimeData *MyTableModel::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData *mimeData = new QMimeData();
+    QByteArray encodedData;
+    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+    foreach(const QModelIndex &index, indexes) {
+        if(index.isValid()) {
+            QString text = data(index, Qt::DisplayRole).toString();
+            stream << text;
+        }
+    }
+    mimeData->setData("text/plain", encodedData);
+    return mimeData;
+}
+
+QStringList MyTableModel::mimeTypes() const
+{
+    QStringList types;
+    types << "text/plain";
+    return types;
+}
+
+bool MyTableModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
+                            int row, int column, const QModelIndex &parent)
+{
+    qDebug() << action;
+    if(action == Qt::IgnoreAction)
+        return true;
+    if(!data->hasFormat("text/plain"))
+        return false;
+    if(column > 0)
+        return false;
+    int beginRow;
+    if(row != -1)
+        beginRow = row;
+    else if(parent.isValid())
+        beginRow = parent.row();
+    else
+        beginRow = rowCount(QModelIndex());
+    QByteArray encodedData = data->data("text/plain");
+    QDataStream stream(&encodedData, QIODevice::ReadOnly);
+    QStringList newItems;
+    int rows = 0;
+    while(!stream.atEnd()) {
+        QString text;
+        stream >> text;
+        newItems << text;
+        ++rows;
+    }
+    insertRows(beginRow, rows, QModelIndex());
+    foreach(const QString &text, newItems) {
+        QModelIndex idx = index(beginRow, column, QModelIndex());
+        setData(idx, text);
+        beginRow++;
+    }
+    return true;
+}
+
+
+bool MyTableModel::dragDropOverwtiteMode() const
+{
+    return false;
+}
 
 Qt::DropActions MyTableModel::supportedDropActions() const
 {
-    return Qt::MoveAction | Qt::CopyAction;
+    return Qt::CopyAction | Qt::MoveAction;
 }
 
 // Делаем вставку, введённых пользователем данных из ячейки
@@ -186,22 +250,18 @@ const QList<Subcontracts> &MyTableModel::getData() const
 
 Qt::ItemFlags MyTableModel::flags(const QModelIndex &index) const
 {
-    // Проверяем на корректность текущий index
+    Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+
     if (index.isValid())
-        // Если индекс правильный, то устанавливаем для него
-        // следующие стандартные возможности:
-        // ItemIsEnabled - включить текущую ячейку;
-        // ItemIsSelectable - текущая ячейка может быть выделяемой;
-        // ItemIsEditable - текущая ячейка может быть редактируемой;
-        // ItemIsDragEnabled - разрешить перемещать данные через захват мышью
-        return Qt::ItemIsEnabled |
-               Qt::ItemIsSelectable |
-               Qt::ItemIsEditable |
-               Qt::ItemIsDragEnabled;
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
     else
-        // Если индекс некорректный, то отправляем нулевой флаг
-        return Qt::NoItemFlags;
+        return Qt::ItemIsDropEnabled | defaultFlags;
 }
+
+QModelIndex MyTableModel::index(int row, int column, const QModelIndex &) const {
+    return createIndex(row, column);
+}
+
 
 
 

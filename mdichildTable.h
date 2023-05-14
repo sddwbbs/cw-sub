@@ -36,6 +36,9 @@ public:
     bool saveFile(const QString &fileName);
     QString currentFile() { return curFile; }
     QModelIndex tableFind(const QString &text);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
     void resetFind();
 
 protected:

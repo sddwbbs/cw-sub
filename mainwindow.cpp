@@ -43,6 +43,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionExit, &QAction::triggered,
             qApp, &QApplication::closeAllWindows);
 
+    connect(ui->mdiArea, &QMdiArea::subWindowActivated, 
+            this, &MainWindow::updateActions);
+
+    ui->lineEdit->setEnabled(false);
+
     // Задаём заголовок окна. Его так же можно через свойства формы
     // в файле mainwindow.ui задать
     setWindowTitle(tr("My MDI Application"));
@@ -250,6 +255,12 @@ MdiChildTable *MainWindow::activeMdiChildTable()
 
     // На случай если активного окна не было
     return nullptr;
+}
+
+void MainWindow::updateActions() {
+    bool hasChild = ui->mdiArea->subWindowList().count() > 0;
+
+    ui->lineEdit->setEnabled(hasChild);
 }
 
 // Метод поиска окна по имени файла

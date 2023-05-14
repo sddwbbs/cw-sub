@@ -27,6 +27,15 @@ public:
     QVariant data(const QModelIndex &index,
                   int role = Qt::DisplayRole) const override;
 
+    QMimeData* mimeData(const QModelIndexList &indexes) const override;
+
+    QStringList mimeTypes() const override;
+
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row,
+                      int column, const QModelIndex &parent) override;
+
+    bool dragDropOverwtiteMode() const;
+
     Qt::DropActions supportedDropActions() const override;
 
     // Метод, возвращает новое значение элемента из ячейки в список
@@ -47,6 +56,7 @@ public:
 
     // Метод, возвращает параметры редактируемого элемента
     Qt::ItemFlags flags(const QModelIndex &index) const override;
+    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
 
 private:
     QList<Subcontracts> subctr;

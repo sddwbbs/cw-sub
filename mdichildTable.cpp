@@ -18,6 +18,14 @@ MdiChildTable::MdiChildTable(QWidget *parent):
 //    this->setDropIndicatorShown(true);
 //    this->setDragDropMode(QAbstractItemView::InternalMove);
 
+    this->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    this->dragDropOverwriteMode();
+    this->setDragEnabled(true);
+    this->setAcceptDrops(true);
+    this->setDropIndicatorShown(true);
+    this->setDefaultDropAction(Qt::MoveAction);
+
+
     /* Подключаем СЛОТ-обработчик для очистки ячейки */
     connect(this, &MdiChildTable::keyPressEvent,
             this, &MdiChildTable::slotClearCell);
@@ -191,6 +199,32 @@ QModelIndex MdiChildTable::tableFind(const QString &text)
 
     return index;
 }
+
+void MdiChildTable::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("text/plain")) {
+        event->acceptProposedAction();
+    }
+}
+
+void MdiChildTable::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasFormat("text/plain")) {
+        QByteArray encodedData = event->mimeData()->data("text/plain");
+        QDataStream stream(&encodedData, QIODevice::ReadOnly);
+        int row = this->indexAt(event->pos()).row();
+        int col = this->indexAt(event->pos()).column();
+        while (!stream.atEnd()) {
+            QString text;
+            stream >> text;
+            QModelIndex index = model()->index(row, col);
+            model()->setData(index, text, Qt::EditRole);
+            row++;
+        }
+        event->acceptProposedAction();
+    }
+}
+
 
 void MdiChildTable::resetFind()
 {
