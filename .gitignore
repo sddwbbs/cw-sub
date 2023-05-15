@@ -7,6 +7,7 @@
 *.core
 *.moc
 *.o
+*.sh
 *.obj
 *.orig
 *.rej
