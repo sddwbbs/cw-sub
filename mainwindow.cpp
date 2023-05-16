@@ -21,9 +21,19 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , languageActionGroup(nullptr)
 {
     ui->setupUi(this);
+
+    qApp->installTranslator(&appTranslator);
+    qApp->installTranslator(&qtTranslator);
+
+    qmPath = qApp->applicationDirPath() + "/translations";
+
+    createLanguageMenu();
+
     // Соединяем пункты меню со слотами
+
     connect(ui->actionOpen, &QAction::triggered,
             this, &MainWindow::open);
     connect(ui->actionNew, &QAction::triggered,
@@ -370,4 +380,119 @@ void MainWindow::on_actionSaveAs_triggered()
     MdiChildTable *myTable = activeMdiChildTable();
     myTable->saveAs();
 }
+
+void MainWindow::createLanguageMenu()
+{
+    /// Создаём список пунктов выбора языка в динамической памяти
+    languageActionGroup = new QActionGroup(this);
+
+    /// Ставим связь пунктов меню со слотом смены языка приложения
+    connect(languageActionGroup, &QActionGroup::triggered,
+            this, &MainWindow::switchLanguage);
+
+    /// Определяем каталог, где лежат файлы переводов "*.qm"
+    QDir dir(qmPath);
+
+    /**
+     * Получаем список файлов "*.qm" в каталоге, которые относятся
+     * к нашей программе по шаблону "multilang_*.qm",
+     * где "multilang" - название нашего приложения
+     * "_" - разделитель
+     * "*" - означает любой символ или группа символ произвольной длинны
+     * ".qm" - расширение файла
+     */
+    QStringList fileNames =
+        dir.entryList(QStringList("multilang_*.qm"));
+
+    /**
+     * Количество пунктов меню нам заранее не известно,
+     * но так как оно зависит от количества файлов "*.qm"
+     * в каталоге "translations",
+     * то мы можем сформировать в меню столько пунктов,
+     * сколько файлов у нас, используя цикл.
+     */
+    for (int i = 0; i < fileNames.size(); i++) {
+        /// Получаем i-ую локаль
+        QString locale = fileNames[i];
+        /// Удаляем символы в строке сначала и по символ "_" включительно
+        locale.remove(0, locale.indexOf('_') + 1);
+        /// Удаляем символы в строке начиная с символа точки
+        locale.truncate(locale.lastIndexOf('.'));
+
+        /// Создаём временную переменную перевода для языкового пункта меню
+        QTranslator translator;
+        /// Загружаем перевод из файла перевода "*.qm"
+        translator.load(fileNames[i], qmPath);
+
+        /**
+         * Создаём имя i-ого пункта меню с названием языка путём
+         * перевода в linguist заменив English на соответствующий язык
+         */
+        QString language = translator.translate("MainWindow",
+                                                "English");
+
+        /**
+         * Создаём пункт в меню с i-ым языком по маске "&%1 %2",
+         * где "&" - символ быстрого доступа к пункту меню через сочетание
+         * клавиш Alt+символ_перед_которым_стоит_&;
+         * "%1" - номер i-ого пункта меню по порядку.
+         * "%2" - название языка, которое будет отображаться в меню.
+         */
+        QAction *action = new QAction(tr("&%1 %2")
+                                          .arg(i + 1)
+                                          .arg(language),
+                                      this);
+
+        /**
+         * Задаём свойства для i-ого пункта меню.
+         * Возможность держать пункт меню выбранным
+         * пока пользователем не будет выбран другой пункт меню.
+         */
+        action->setCheckable(true);
+        // Задаём внутренние данные хранимые в i-ом пункте.
+        // В нашем случае это локаль вида "ru_RU"
+        action->setData(locale);
+
+        /// Добавляем i-ый пункт в меню на нашей форме "mainwindow.ui"
+        ui->menuLanguage->addAction(action);
+        /// Добавляем i-ый пункт в единую группу пунктов
+        languageActionGroup->addAction(action);
+
+        /// Задаём  английский язык в качестве выбранного по умолчанию
+        if (language == "English")
+            action->setChecked(true);
+    }
+}
+
+void MainWindow::switchLanguage(QAction *action)
+{
+    /**
+     * Определяем локаль которую выбрал пользователь.
+     * Например "ru_RU" для русского языка в России или
+     * "en_US" для английского в США
+     */
+    QString locale = action->data().toString();
+
+    /// Загружаем тот перевод который выбрал пользователь
+    appTranslator.load("multilang_" + locale, qmPath);
+    locale.chop(3);
+    /**
+     * Для переводов стандартных сообщений Qt можно запросить у системы
+     * их местонахождение через вызов "QLibraryInfo::TranslationsPath"
+     */
+    qtTranslator.load("qt_" + locale + ".qm", QLibraryInfo::location(
+                                                  QLibraryInfo::TranslationsPath));
+
+
+
+    /**
+     * Взываем "retranslateUi()" для обновления интерфейса приложения
+     * используя загруженный из соответствующего файла "qm" язык
+     */
+    ui->retranslateUi(this);
+
+    // Для элемента созданного динамический, но не на форме,
+    // надо заново задать текст, который сработает при переключении языка
+}
+
 

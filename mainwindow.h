@@ -2,6 +2,7 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QTranslator>
 
 namespace Ui {
 class MainWindow;
@@ -10,6 +11,7 @@ class MainWindow;
 class MdiChild;
 class MdiChildTable;
 class QMdiSubWindow;
+class QActionGroup;
 
 class MainWindow : public QMainWindow
 {
@@ -42,6 +44,8 @@ private slots:
 
     void on_actionSaveAs_triggered();
 
+    void switchLanguage(QAction *action);
+
 protected:
     // Для вопроса о сохранении файла при закрытии главного окна,
     // если в одном из дочерних окон файл был изменён
@@ -61,6 +65,17 @@ private:
     // Методы для сохранения и чтения настроек
     void readSettings();
     void writeSettings();
+
+    QTranslator appTranslator;
+    QTranslator qtTranslator;
+
+    // Список доступных переводов в меню будет формироваться динамически
+    QActionGroup *languageActionGroup;
+    /// Переменная где будет храниться путь к файлам перевода "*.qm"
+    QString qmPath;
+
+    /// Метод для создания языкового меню
+    void createLanguageMenu();
 };
 
 #endif // MAINWINDOW_HPP
