@@ -5,7 +5,6 @@
 #include <QtCharts/QPieSeries>
 #include <QDesktopWidget>
 #include <QMessageBox>
-//#include <map>
 #include <vector>
 #include <QVBoxLayout>
 
