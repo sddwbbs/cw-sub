@@ -78,6 +78,7 @@
     <property name="title">
      <string>Diagram</string>
     </property>
+    <addaction name="actionShow"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -211,6 +212,11 @@
   <action name="actionEnglish">
    <property name="text">
     <string>English</string>
+   </property>
+  </action>
+  <action name="actionShow">
+   <property name="text">
+    <string>Show</string>
    </property>
   </action>
  </widget>

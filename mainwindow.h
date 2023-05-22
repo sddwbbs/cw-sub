@@ -46,7 +46,7 @@ private slots:
 
     void switchLanguage(QAction *action);
 
-    void diagram_triggered();
+    void on_actionShow_triggered();
 
 protected:
     // Для вопроса о сохранении файла при закрытии главного окна,

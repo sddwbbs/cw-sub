@@ -41,33 +41,23 @@ void EmpDiagram::createDiagram(QList<Subcontracts> values) {
 
         if (temp >= 0 && temp <= 10) {
             employees[0]++;
-            break;
-        }
-
-        if (temp > 10 && temp <= 20) {
+        } else if (temp > 10 && temp <= 20) {
             employees[1]++;
-            break;
-        }
-
-        if (temp > 20 && temp <= 30) {
+        } else if (temp > 20 && temp <= 30) {
             employees[2]++;
-            break;
-        }
-
-        if (temp > 30 && temp <= 40) {
+        } else if (temp > 30 && temp <= 40) {
             employees[3]++;
-            break;
+        } else {
+            employees[4]++;
         }
-
-        employees[4]++;
     }
 
     QPieSeries *series = new QPieSeries();
-    series->append(tr("от 0 до 10 работников"), (employees[0] / values.length()) * 100);
-    series->append(tr("от 10 до 20 работников"), (employees[1] / values.length()) * 100);
-    series->append(tr("от 20 до 30 работников"), (employees[2] / values.length()) * 100);
-    series->append(tr("от 30 до 40 работников"), (employees[3] / values.length()) * 100);
-    series->append(tr("от 40 и более"), (employees[4] / values.length()) * 100);
+    series->append(tr("от 0 до 10 работников"), (employees[0] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("от 10 до 20 работников"), (employees[1] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("от 20 до 30 работников"), (employees[2] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("от 30 до 40 работников"), (employees[3] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("от 40 и более"), (employees[4] / static_cast<double>(values.length())) * 100.0);
 
     // Создаем объект графика
     QChart *chart = new QChart();
@@ -80,5 +70,5 @@ void EmpDiagram::createDiagram(QList<Subcontracts> values) {
 
     // Создаем объект главного окна и добавляем в него представление графика
     this->setCentralWidget(chartView);
-    this->resize(500, 400);
+    this->resize(800, 600);
 }

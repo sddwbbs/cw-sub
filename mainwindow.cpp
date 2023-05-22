@@ -50,9 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionPaste, &QAction::triggered,
             this, &MainWindow::paste);
 
-    connect(ui->menuDiagram, &QAction::triggered,
-            this, &MainWindow::diagram_triggered);
-
     connect(ui->actionExit, &QAction::triggered,
             qApp, &QApplication::closeAllWindows);
 
@@ -497,7 +494,8 @@ void MainWindow::switchLanguage(QAction *action)
     // надо заново задать текст, который сработает при переключении языка
 }
 
-void MainWindow::diagram_triggered() {
+void MainWindow::on_actionShow_triggered()
+{
     activeMdiChildTable()->showDiagram();
 }
 
