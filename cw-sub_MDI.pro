@@ -1,4 +1,6 @@
 QT       += core gui
+QT       += charts
+QT       += printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,6 +14,7 @@ SOURCES += \
     SubcontractsClass.cpp \
     SubcontractsModel.cpp \
     about.cpp \
+    diagram.cpp \
     main.cpp \
     mainwindow.cpp \
     mdichild.cpp \
@@ -21,12 +24,14 @@ HEADERS += \
     SubcontractsClass.h \
     SubcontractsModel.h \
     about.h \
+    diagram.h \
     mainwindow.h \
     mdichild.h \
     mdichildTable.h
 
 FORMS += \
     about.ui \
+    diagram.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -36,3 +41,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     app.qrc
+
+TRANSLATIONS += translations/cw-sub_ru_RU.ts

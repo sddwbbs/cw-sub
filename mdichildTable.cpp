@@ -20,7 +20,6 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     this->setDropIndicatorShown(true);
     this->setDefaultDropAction(Qt::MoveAction);
 
-
     /* Подключаем СЛОТ-обработчик для очистки ячейки */
     connect(this, &MdiChildTable::keyPressEvent,
             this, &MdiChildTable::slotClearCell);

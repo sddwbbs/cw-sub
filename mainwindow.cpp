@@ -90,7 +90,7 @@ void MainWindow::open()
     QFileDialog *fDialog = new QFileDialog(this);
     fDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    QString fileName = fDialog->getOpenFileName(this, tr("Open Document"), QDir::cleanPath("./data/"),
+    QString fileName = fDialog->getOpenFileName(this, tr("Open Document"), QDir::cleanPath("../cw-sub_mdi/data"),
                                                 "Text Files (*.txt *.db)", nullptr, QFileDialog::DontUseNativeDialog);
 
     QFileInfo fileinfo(fileName);
