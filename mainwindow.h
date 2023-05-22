@@ -46,6 +46,8 @@ private slots:
 
     void switchLanguage(QAction *action);
 
+    void diagram_triggered();
+
 protected:
     // Для вопроса о сохранении файла при закрытии главного окна,
     // если в одном из дочерних окон файл был изменён

@@ -50,13 +50,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionPaste, &QAction::triggered,
             this, &MainWindow::paste);
 
+    connect(ui->menuDiagram, &QAction::triggered,
+            this, &MainWindow::diagram_triggered);
+
     connect(ui->actionExit, &QAction::triggered,
             qApp, &QApplication::closeAllWindows);
 
-    connect(ui->mdiArea, &QMdiArea::subWindowActivated, 
+    connect(ui->mdiArea, &QMdiArea::subWindowActivated,
             this, &MainWindow::updateActions);
-
-    ui->lineEdit->setEnabled(false);
 
     // Задаём заголовок окна. Его так же можно через свойства формы
     // в файле mainwindow.ui задать
@@ -86,7 +87,6 @@ void MainWindow::newFile()
 // Открываем файл
 void MainWindow::open()
 {
-//    QString fileName = QFileDialog::getOpenFileName(this);
     QFileDialog *fDialog = new QFileDialog(this);
     fDialog->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -155,7 +155,7 @@ void MainWindow::save()
     // про него говорил, когда выбирал пункт "Save".
     // У этого активного окна запускаем метод, который
     // сохранит файл
-    if (activeMdiChild() && activeMdiChild()->save())
+    if (activeMdiChildTable() && activeMdiChildTable()->save())
         statusBar()->showMessage(tr("File saved"), 2000);
 }
 
@@ -163,7 +163,7 @@ void MainWindow::save()
 void MainWindow::saveAs()
 {
     // Аналогично предыдущему варианту
-    if (activeMdiChild() && activeMdiChild()->saveAs())
+    if (activeMdiChildTable() && activeMdiChildTable()->saveAs())
         statusBar()->showMessage(tr("File saved"), 2000);
 }
 
@@ -271,6 +271,8 @@ void MainWindow::updateActions() {
     bool hasChild = ui->mdiArea->subWindowList().count() > 0;
 
     ui->lineEdit->setEnabled(hasChild);
+    ui->actionSave->setEnabled(hasChild);
+    ui->actionSaveAs->setEnabled(hasChild);
 }
 
 // Метод поиска окна по имени файла
@@ -495,4 +497,7 @@ void MainWindow::switchLanguage(QAction *action)
     // надо заново задать текст, который сработает при переключении языка
 }
 
+void MainWindow::diagram_triggered() {
+    activeMdiChildTable()->showDiagram();
+}
 

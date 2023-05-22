@@ -38,8 +38,8 @@ public:
     QModelIndex tableFind(const QString &text);
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
-
     void resetFind();
+    void showDiagram();
 
 protected:
     // Для вопроса о сохранении файла при закрытии дочернего окна,

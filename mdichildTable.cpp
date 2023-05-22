@@ -1,6 +1,7 @@
 ﻿#include <QtWidgets>
 
 #include "mdichildTable.h"
+#include "empdiagram.h"
 
 MdiChildTable::MdiChildTable(QWidget *parent):
     QTableView(parent)
@@ -327,6 +328,19 @@ void MdiChildTable::setCurrentFile(const QString &fileName)
     // Используя новое имя файла надо обновить признак редактирования
     // в заголовке дочернего окна
     setWindowTitle(userFriendlyCurrentFile());
+}
+
+void MdiChildTable::showDiagram()
+{
+    QList<Subcontracts> subctr = tableModel->getData();
+
+    if (subctr.length() == 0) {
+        QMessageBox::warning(this, "", tr("There is no data for create chart!"));
+        return;
+    }
+
+    EmpDiagram *newDiagram = new EmpDiagram(this, subctr);
+    newDiagram->show();
 }
 
 

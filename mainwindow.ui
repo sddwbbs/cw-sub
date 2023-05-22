@@ -74,10 +74,16 @@
      <string>Language</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuDiagram">
+    <property name="title">
+     <string>Diagram</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuAbout"/>
    <addaction name="menuLanguage"/>
+   <addaction name="menuDiagram"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

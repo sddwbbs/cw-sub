@@ -14,7 +14,7 @@ SOURCES += \
     SubcontractsClass.cpp \
     SubcontractsModel.cpp \
     about.cpp \
-    diagram.cpp \
+    empdiagram.cpp \
     main.cpp \
     mainwindow.cpp \
     mdichild.cpp \
@@ -24,14 +24,14 @@ HEADERS += \
     SubcontractsClass.h \
     SubcontractsModel.h \
     about.h \
-    diagram.h \
+    empdiagram.h \
     mainwindow.h \
     mdichild.h \
     mdichildTable.h
 
 FORMS += \
     about.ui \
-    diagram.ui \
+    empdiagram.ui \
     mainwindow.ui
 
 # Default rules for deployment.
