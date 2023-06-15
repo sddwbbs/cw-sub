@@ -99,7 +99,11 @@ QStringList MyTableModel::mimeTypes() const
 }
 
 bool MyTableModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
+<<<<<<< HEAD
                             int row, int column, const QModelIndex &parent)
+=======
+                                int row, int column, const QModelIndex &parent)
+>>>>>>> c5299f1 (Рефакторинг кода)
 {
     qDebug() << action;
     if(action == Qt::IgnoreAction)
@@ -259,6 +263,7 @@ Qt::ItemFlags MyTableModel::flags(const QModelIndex &index) const
 QModelIndex MyTableModel::index(int row, int column, const QModelIndex &) const {
     return createIndex(row, column);
 }
+<<<<<<< HEAD
 
 
 
@@ -269,3 +274,5 @@ QModelIndex MyTableModel::index(int row, int column, const QModelIndex &) const 
 
 
 
+=======
+>>>>>>> c5299f1 (Рефакторинг кода)

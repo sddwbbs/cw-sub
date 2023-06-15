@@ -17,4 +17,7 @@ void About::on_pushButton_clicked()
 {
     this->close();
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> c5299f1 (Рефакторинг кода)

@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 #ifndef SUBCONTRACTSCLASS_H
 #define SUBCONTRACTSCLASS_H
+=======
+#ifndef SUBCONTRACTS_H
+#define SUBCONTRACTS_H
+>>>>>>> c5299f1 (Рефакторинг кода)
 
 #include <QString>
 
@@ -43,5 +48,9 @@ public:
     float getRating() const;
 };
 
+<<<<<<< HEAD
 
 #endif // SUBCONTRACTSCLASS_H
+=======
+#endif // SUBCONTRACTS_H
+>>>>>>> c5299f1 (Рефакторинг кода)

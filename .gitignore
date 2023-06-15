@@ -7,7 +7,10 @@
 *.core
 *.moc
 *.o
+<<<<<<< HEAD
 *.sh
+=======
+>>>>>>> c5299f1 (Рефакторинг кода)
 *.obj
 *.orig
 *.rej
@@ -20,7 +23,10 @@
 *.*#
 core
 !core/
+<<<<<<< HEAD
 !moc_predefs.h
+=======
+>>>>>>> c5299f1 (Рефакторинг кода)
 tags
 .DS_Store
 .directory
@@ -29,7 +35,10 @@ Makefile*
 *.prl
 *.app
 moc_*.cpp
+<<<<<<< HEAD
 moc_*.h
+=======
+>>>>>>> c5299f1 (Рефакторинг кода)
 ui_*.h
 qrc_*.cpp
 Thumbs.db

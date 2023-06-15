@@ -53,4 +53,9 @@ private:
     bool isUntitled;
 };
 
+<<<<<<< HEAD
 #endif
+=======
+
+#endif // MDICHILD_H
+>>>>>>> c5299f1 (Рефакторинг кода)
