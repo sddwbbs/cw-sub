@@ -128,7 +128,7 @@ void MdiChildTable::initTable() {
 // При сохранении файла надо выяснить есть ли у него название
 bool MdiChildTable::save()
 {
-    return saveFile(curFile);;
+    return saveFile(curFile);
 }
 
 // Сохранение файла через открытие диалогового окна сохранения файла,

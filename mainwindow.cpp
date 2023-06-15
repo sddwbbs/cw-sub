@@ -1,22 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "about.h"
 
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QFile>
-#include <QtWidgets>
-#include <QTextStream>
-#include <QApplication>
-#include <QTableView>
-#include <QCloseEvent>
-#include <QMdiSubWindow>
-#include <QSettings>
-#include <QTranslator>
-#include <QActionGroup>
-
-#include "mdichild.h"
-#include "mdichildTable.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -25,14 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    qApp->installTranslator(&appTranslator);
-    qApp->installTranslator(&qtTranslator);
-
-    qmPath = qApp->applicationDirPath() + "/translations";
-
-    createLanguageMenu();
-
-    // Соединяем пункты меню со слотами
+    ui->menuDiagram->setEnabled(false);
+    ui->menuEdit->setEnabled(false);
 
     connect(ui->actionOpen, &QAction::triggered,
             this, &MainWindow::open);
@@ -59,6 +37,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // Задаём заголовок окна. Его так же можно через свойства формы
     // в файле mainwindow.ui задать
     setWindowTitle(tr("My MDI Application"));
+
+    qApp->installTranslator(&appTranslator);
+    qApp->installTranslator(&qtTranslator);
+
+    qmPath = "../cw-sub_mdi/translations";
+
+    createLanguageMenu();
 
     readSettings();
 }
@@ -266,10 +251,13 @@ MdiChildTable *MainWindow::activeMdiChildTable()
 
 void MainWindow::updateActions() {
     bool hasChild = ui->mdiArea->subWindowList().count() > 0;
+//    QMdiSubWindow *existing = findMdiChildTable(fileName);
 
     ui->lineEdit->setEnabled(hasChild);
     ui->actionSave->setEnabled(hasChild);
     ui->actionSaveAs->setEnabled(hasChild);
+    ui->menuDiagram->setEnabled(hasChild);
+    ui->menuEdit->setEnabled(hasChild);
 }
 
 // Метод поиска окна по имени файла
@@ -304,6 +292,8 @@ QMdiSubWindow *MainWindow::findMdiChildTable(const QString &fileName)
     // что бы не было ошибки и путаницы. Вдруг есть ещё один файл с таким же
     // именем но в другом каталоге
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
+
+    QList<QMdiSubWindow *> temp = ui->mdiArea->subWindowList();
 
     // Теперь переберём все дочерние окна в поисках окна с
     for (auto *window : ui->mdiArea->subWindowList()) {
@@ -358,7 +348,6 @@ void MainWindow::on_actionAbout_author_triggered()
     aboutWnd.exec();
 }
 
-
 void MainWindow::on_lineEdit_textChanged(const QString &text)
 {
     MdiChildTable *myTable = activeMdiChildTable();
@@ -372,7 +361,6 @@ void MainWindow::on_lineEdit_textChanged(const QString &text)
     else
         myTable->resetFind();
 }
-
 
 void MainWindow::on_actionSaveAs_triggered()
 {
@@ -392,16 +380,18 @@ void MainWindow::createLanguageMenu()
     /// Определяем каталог, где лежат файлы переводов "*.qm"
     QDir dir(qmPath);
 
+    qDebug() << dir;
+
     /**
      * Получаем список файлов "*.qm" в каталоге, которые относятся
-     * к нашей программе по шаблону "multilang_*.qm",
+     * к нашей программе по шаблону "cw-object*.qm",
      * где "multilang" - название нашего приложения
      * "_" - разделитель
      * "*" - означает любой символ или группа символ произвольной длинны
      * ".qm" - расширение файла
      */
     QStringList fileNames =
-        dir.entryList(QStringList("multilang_*.qm"));
+        dir.entryList(QStringList("cw-sub_mdi_*.qm"));
 
     /**
      * Количество пунктов меню нам заранее не известно,
@@ -473,7 +463,7 @@ void MainWindow::switchLanguage(QAction *action)
     QString locale = action->data().toString();
 
     /// Загружаем тот перевод который выбрал пользователь
-    appTranslator.load("multilang_" + locale, qmPath);
+    appTranslator.load("cw-sub_mdi_" + locale, qmPath);
     locale.chop(3);
     /**
      * Для переводов стандартных сообщений Qt можно запросить у системы

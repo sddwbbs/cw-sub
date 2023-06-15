@@ -22,7 +22,7 @@ EmpDiagram::EmpDiagram(QWidget *parent, QList<Subcontracts> values) :
     int y = (availableGeometry.height() - this->height()) / 2;
     this->move(x, y);
 
-    setWindowTitle(tr("Диаграмма количества работников"));
+    setWindowTitle(tr("Diagram"));
 
     createDiagram(values);
 }
@@ -52,16 +52,16 @@ void EmpDiagram::createDiagram(QList<Subcontracts> values) {
     }
 
     QPieSeries *series = new QPieSeries();
-    series->append(tr("от 0 до 10 работников"), (employees[0] / static_cast<double>(values.length())) * 100.0);
-    series->append(tr("от 10 до 20 работников"), (employees[1] / static_cast<double>(values.length())) * 100.0);
-    series->append(tr("от 20 до 30 работников"), (employees[2] / static_cast<double>(values.length())) * 100.0);
-    series->append(tr("от 30 до 40 работников"), (employees[3] / static_cast<double>(values.length())) * 100.0);
-    series->append(tr("от 40 и более"), (employees[4] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("from 0 to 10 employees"), (employees[0] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("from 10 to 20 employees"), (employees[1] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("from 20 to 30 employees"), (employees[2] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("from 30 to 40 employees"), (employees[3] / static_cast<double>(values.length())) * 100.0);
+    series->append(tr("from 40 and more"), (employees[4] / static_cast<double>(values.length())) * 100.0);
 
     // Создаем объект графика
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle(tr("Количество работников у субподрядчиков"));
+    chart->setTitle(tr("Number of employees of subcontractors"));
 
     // Создаем объект представления графика
     QChartView *chartView = new QChartView(chart);

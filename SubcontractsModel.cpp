@@ -186,6 +186,11 @@ bool MyTableModel::setData(const QModelIndex &index,
     return false;
 }
 
+const QList<Subcontracts> &MyTableModel::getData() const
+{
+    // Возвращаем содержимое списка
+    return subctr;
+}
 
 // Слот вставляет новые значения в таблицу
 bool MyTableModel::insertRow(int position, const Subcontracts &value)
@@ -219,15 +224,15 @@ QVariant MyTableModel::headerData(int section,
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         // Определяем какой сейчас столбец. Отсчёт идёт от нуля
         switch (section) {
-        case 0: return QString("Name");
-        case 1: return QString("Number of Employees");
-        case 2: return QString("Workload");
-        case 3: return QString("Location");
-        case 4: return QString("Additional Services");
-        case 5: return QString("Price");
-        case 6: return QString("Experience");
-        case 7: return QString("Completed Projects");
-        case 8: return QString("Rating");
+        case 0: return QString(tr("Name"));
+        case 1: return QString(tr("Number of Employees"));
+        case 2: return QString(tr("Workload"));
+        case 3: return QString(tr("Location"));
+        case 4: return QString(tr("Additional Services"));
+        case 5: return QString(tr("Price"));
+        case 6: return QString(tr("Experience"));
+        case 7: return QString(tr("Completed Projects"));
+        case 8: return QString(tr("Rating"));
         }
     }
 
@@ -239,12 +244,6 @@ QVariant MyTableModel::headerData(int section,
 
     // Для всех остальных случаев выдать недопустимый вариант (invalid)
     return QVariant();
-}
-
-const QList<Subcontracts> &MyTableModel::getData() const
-{
-    // Возвращаем содержимое списка
-    return subctr;
 }
 
 Qt::ItemFlags MyTableModel::flags(const QModelIndex &index) const

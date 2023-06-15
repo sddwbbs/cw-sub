@@ -42,7 +42,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     app.qrc
 
-TRANSLATIONS += translations/cw-sub_ru_RU.ts \
-                translations/cw-sub_en_US.ts \
-                translations/cw-sub_de_DE.ts
+TRANSLATIONS += translations/cw-sub_mdi_ru_RU.ts \
+                translations/cw-sub_mdi_en_US.ts \
+                translations/cw-sub_mdi_de_DE.ts
 

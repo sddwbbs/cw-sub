@@ -43,6 +43,8 @@ public:
                  const QVariant &value,
                  int role = Qt::EditRole) override;
 
+    const QList<Subcontracts> &getData() const;
+
     // Метод, вставляет новую строку "value" в модель
     bool insertRow(int position, const Subcontracts &value);
     bool removeRow(const int position);
@@ -51,8 +53,6 @@ public:
     QVariant headerData(int section,
                         Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const override;
-
-    const QList<Subcontracts> &getData() const;
 
     // Метод, возвращает параметры редактируемого элемента
     Qt::ItemFlags flags(const QModelIndex &index) const override;
