@@ -80,11 +80,7 @@ private:
     QMdiSubWindow *findMdiChild(const QString &fileName);
 
     QMdiSubWindow *findMdiChildTable(const QString &fileName);
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> c5299f1 (Рефакторинг кода)
     void readSettings();
 
     void writeSettings();
@@ -101,7 +97,3 @@ private:
 };
 
 #endif // MAINWINDOW_HPP
-<<<<<<< HEAD
-=======
-
->>>>>>> c5299f1 (Рефакторинг кода)

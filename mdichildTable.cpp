@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿#include <QtWidgets>
-=======
 #include <QtWidgets>
->>>>>>> c5299f1 (Рефакторинг кода)
 
 #include "mdichildTable.h"
 #include "empdiagram.h"
@@ -346,8 +342,5 @@ void MdiChildTable::showDiagram()
     EmpDiagram *newDiagram = new EmpDiagram(this, subctr);
     newDiagram->show();
 }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> c5299f1 (Рефакторинг кода)

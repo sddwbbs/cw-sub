@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 #ifndef SUBCONTRACTSMODEL_H
 #define SUBCONTRACTSMODEL_H
-=======
-#ifndef MYTABLEMODEL_H
-#define MYTABLEMODEL_H
->>>>>>> c5299f1 (Рефакторинг кода)
 
 #include <QAbstractTableModel>
 #include <QList>
@@ -67,11 +62,7 @@ private:
     QList<Subcontracts> subctr;
 };
 
-<<<<<<< HEAD
 
 
 
 #endif // SUBCONTRACTSMODEL_H
-=======
-#endif // MYTABLEMODEL_H
->>>>>>> c5299f1 (Рефакторинг кода)

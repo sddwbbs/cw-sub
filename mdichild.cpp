@@ -62,10 +62,7 @@ bool MdiChild::loadFile(const QString &fileName)
 // При сохранении файла надо выяснить есть ли у него название
 bool MdiChild::save()
 {
-<<<<<<< HEAD
     close();
-=======
->>>>>>> c5299f1 (Рефакторинг кода)
     // Проверяем признак именования файла
     if (isUntitled) {
         // Если у файла нет имени
