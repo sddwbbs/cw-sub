@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -27,11 +26,19 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionPaste, &QAction::triggered,
             this, &MainWindow::paste);
 
-    connect(ui->actionExit, &QAction::triggered,
+    connect(ui->actionExit_2, &QAction::triggered,
             qApp, &QApplication::closeAllWindows);
 
     connect(ui->mdiArea, &QMdiArea::subWindowActivated,
             this, &MainWindow::updateActions);
+
+    ui->actionCut->setEnabled(false);
+    ui->actionCopy->setEnabled(false);
+    ui->actionPaste->setEnabled(false);
+    ui->actionPrint->setEnabled(false);
+    ui->lineEdit->setClearButtonEnabled(true);
+//    ui->label->hide();
+//    ui->lineEdit->hide();
 
     // Задаём заголовок окна. Его так же можно через свойства формы
     // в файле mainwindow.ui задать
@@ -71,59 +78,60 @@ void MainWindow::open()
     QFileDialog *fDialog = new QFileDialog(this);
     fDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    QString fileName = fDialog->getOpenFileName(this, tr("Open Document"), QDir::cleanPath("../cw-sub_mdi/data"),
+    QString fileName = fDialog->getOpenFileName(this, tr("Open Document"), QDir::cleanPath("../cw-sub/data"),
                                                 "Text Files (*.txt *.db)", nullptr, QFileDialog::DontUseNativeDialog);
 
     QFileInfo fileinfo(fileName);
     QString ext = fileinfo.suffix();
 
+    if (fileName.isEmpty()) {
+        return;
+    }
+
     if (ext != "db") {
-        if (!fileName.isEmpty()) {
-            // Выесняем, есть ли у нас уже документ с таким названием
-            QMdiSubWindow *existing = findMdiChild(fileName);
-            if (existing) {
-                // Если есть, то делаем его активным и выходим из метода
-                ui->mdiArea->setActiveSubWindow(existing);
-                return;
-            }
-
-            // Если такого файла ещё нет, то создаём новое окно
-            MdiChild *child = createMdiChild();
-            // и загружаем файл
-            if (child->loadFile(fileName)) {
-                // О чём сообщаем пользователю через нижнюю часть окна
-                ui->statusBar->showMessage(tr("File loaded"), 2000);
-                // Показываем окно
-                child->show();
-            } else {
-                // Если загрузить не удалось, то удаляем только что
-                // созданный экземпляр окна
-                child->close();
-            }
+        // Выесняем, есть ли у нас уже документ с таким названием
+        QMdiSubWindow *existing = findMdiChild(fileName, false);
+        if (existing) {
+            // Если есть, то делаем его активным и выходим из метода
+            ui->mdiArea->setActiveSubWindow(existing);
+            return;
         }
-    } else {
-        if (!fileName.isEmpty()) {
-            // Выесняем, есть ли у нас уже документ с таким названием
-            QMdiSubWindow *existing = findMdiChildTable(fileName);
-            if (existing) {
-                // Если есть, то делаем его активным и выходим из метода
-                ui->mdiArea->setActiveSubWindow(existing);
-                return;
-            }
 
-            // Если такого файла ещё нет, то создаём новое окно
-            MdiChildTable *child = createMdiChildTable();
-            // и загружаем файл
-            if (child->loadFile(fileName)) {
-                // О чём сообщаем пользователю через нижнюю часть окна
-                ui->statusBar->showMessage(tr("File loaded"), 2000);
-                // Показываем окно
-                child->show();
-            } else {
-                // Если загрузить не удалось, то удаляем только что
-                // созданный экземпляр окна
-                child->close();
-            }
+        // Если такого файла ещё нет, то создаём новое окно
+        MdiChild *child = createMdiChild();
+        // и загружаем файл
+        if (child->loadFile(fileName)) {
+            // О чём сообщаем пользователю через нижнюю часть окна
+            ui->statusBar->showMessage(tr("File loaded"), 2000);
+            // Показываем окно
+            child->show();
+        } else {
+            // Если загрузить не удалось, то удаляем только что
+            // созданный экземпляр окна
+            child->close();
+        }
+
+    } else {
+        // Выесняем, есть ли у нас уже документ с таким названием
+        QMdiSubWindow *existing = findMdiChild(fileName, true);
+        if (existing) {
+            // Если есть, то делаем его активным и выходим из метода
+            ui->mdiArea->setActiveSubWindow(existing);
+            return;
+        }
+
+        // Если такого файла ещё нет, то создаём новое окно
+        MdiChildTable *child = createMdiChildTable();
+        // и загружаем файл
+        if (child->loadFile(fileName)) {
+            // О чём сообщаем пользователю через нижнюю часть окна
+            ui->statusBar->showMessage(tr("File loaded"), 2000);
+            // Показываем окно
+            child->show();
+        } else {
+            // Если загрузить не удалось, то удаляем только что
+            // созданный экземпляр окна
+            child->close();
         }
     }
 }
@@ -248,66 +256,42 @@ MdiChildTable *MainWindow::activeMdiChildTable()
     return nullptr;
 }
 
-void MainWindow::updateActions() {
+void MainWindow::updateActions()
+{
     bool hasChild = ui->mdiArea->subWindowList().count() > 0;
+    MdiChild *mdiChild = activeMdiChild();
+    bool isTextEdit = mdiChild;
     //    QMdiSubWindow *existing = findMdiChildTable(fileName);
 
-    ui->lineEdit->setEnabled(hasChild);
     ui->actionSave->setEnabled(hasChild);
     ui->actionSaveAs->setEnabled(hasChild);
     ui->menuDiagram->setEnabled(hasChild);
     ui->menuEdit->setEnabled(hasChild);
+    ui->actionCut->setEnabled(isTextEdit);
+    ui->actionCopy->setEnabled(isTextEdit);
+    ui->actionPaste->setEnabled(isTextEdit);
+    ui->actionPrint->setEnabled(!isTextEdit && hasChild);
+    ui->lineEdit->setEnabled(!isTextEdit && hasChild);
 }
 
-// Метод поиска окна по имени файла
-QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)
+QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName, bool db)
 {
-    // Вначале определим полный путь к файлу и его имя,
-    // что бы не было ошибки и путаницы. Вдруг есть ещё один файл с таким же
-    // именем но в другом каталоге
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
 
-    // Теперь переберём все дочерние окна в поисках окна с
     for (auto *window : ui->mdiArea->subWindowList()) {
-        // Полученный в текущей итерации цикла указатель приводим
-        // к типу MdiChild
-        MdiChild *mdiChild = qobject_cast<MdiChild *>(window->widget());
-        // Методом сравнения определяем, является ли имя файла
-        // в текущем окне искомым именем.
-        if (mdiChild->currentFile() == canonicalFilePath)
-            // Если совпадают, значит окно найдено и мы
-            // возвращаем указатель на него
-            return window;
+        if (db) {
+            MdiChildTable *mdiChildTable = qobject_cast<MdiChildTable *>(window->widget());
+            if (mdiChildTable && mdiChildTable->currentFile() == canonicalFilePath) {
+                return window;
+            }
+        } else {
+            MdiChild *mdiChild = qobject_cast<MdiChild *>(window->widget());
+            if (mdiChild && mdiChild->currentFile() == canonicalFilePath) {
+                return window;
+            }
+        }
     }
 
-    // На случай если окно не нашлось
-    return nullptr;
-}
-
-// Метод поиска окна по имени файла
-QMdiSubWindow *MainWindow::findMdiChildTable(const QString &fileName)
-{
-    // Вначале определим полный путь к файлу и его имя,
-    // что бы не было ошибки и путаницы. Вдруг есть ещё один файл с таким же
-    // именем но в другом каталоге
-    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
-
-    QList<QMdiSubWindow *> temp = ui->mdiArea->subWindowList();
-
-    // Теперь переберём все дочерние окна в поисках окна с
-    for (auto *window : ui->mdiArea->subWindowList()) {
-        // Полученный в текущей итерации цикла указатель приводим
-        // к типу MdiChild
-        MdiChildTable *mdiChildTable = qobject_cast<MdiChildTable *>(window->widget());
-        // Методом сравнения определяем, является ли имя файла
-        // в текущем окне искомым именем.
-        if (mdiChildTable->currentFile() == canonicalFilePath)
-            // Если совпадают, значит окно найдено и мы
-            // возвращаем указатель на него
-            return window;
-    }
-
-    // На случай если окно не нашлось
     return nullptr;
 }
 
@@ -361,12 +345,6 @@ void MainWindow::on_lineEdit_textChanged(const QString &text)
         myTable->resetFind();
 }
 
-void MainWindow::on_actionSaveAs_triggered()
-{
-    MdiChildTable *myTable = activeMdiChildTable();
-    myTable->saveAs();
-}
-
 void MainWindow::createLanguageMenu()
 {
     // Создаём список пунктов выбора языка в динамической памяти
@@ -411,7 +389,6 @@ void MainWindow::createLanguageMenu()
         if (language == "English")
             action->setChecked(true);
     }
-
 }
 
 void MainWindow::switchLanguage(QAction *action)
@@ -427,10 +404,18 @@ void MainWindow::switchLanguage(QAction *action)
     ui->retranslateUi(this);
 }
 
-
-
 void MainWindow::on_actionShow_triggered()
 {
     activeMdiChildTable()->showDiagram();
+}
+
+void MainWindow::on_actionPrint_triggered()
+{
+    MdiChildTable *activeWindow = activeMdiChildTable();
+    if (!activeWindow) {
+        QMessageBox::warning(this, tr("Warning"), tr("There is no windows!"));
+        return;
+    }
+    activeWindow->printTable(activeWindow);
 }
 

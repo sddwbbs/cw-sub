@@ -10,7 +10,7 @@ using namespace std;
 
 MyTableModel::MyTableModel(QObject *parent):
     QAbstractTableModel(parent)
-    , columnsNum(9) // Задаём количество столбцов
+    , columnsNum(10) // Задаём количество столбцов
 {
 
 }
@@ -50,15 +50,16 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
         // Роль, которая отрабатывает при редактировании ячейки таблицы
     case Qt::EditRole :
         switch(col) {
-        case 0: return subctr[row].getName();
-        case 1: return subctr[row].getNumberEmpl();
-        case 2: return subctr[row].getWorkload();
-        case 3: return subctr[row].getLocation();
-        case 4: return subctr[row].getAdditionalServ();
-        case 5: return subctr[row].getPrice();
-        case 6: return subctr[row].getExperience();
-        case 7: return subctr[row].getCompletedProjects();
-        case 8: return subctr[row].getRating();
+        case 0: return subctr[row].getId();
+        case 1: return subctr[row].getName();
+        case 2: return subctr[row].getNumberEmpl();
+        case 3: return subctr[row].getWorkload();
+        case 4: return subctr[row].getLocation();
+        case 5: return subctr[row].getAdditionalServ();
+        case 6: return subctr[row].getPrice();
+        case 7: return subctr[row].getExperience();
+        case 8: return subctr[row].getCompletedProjects();
+        case 9: return subctr[row].getRating();
         }
 
         // Роль для изменения фона ячейки
@@ -163,15 +164,15 @@ bool MyTableModel::setData(const QModelIndex &index,
     // Другие роли будут, если поменяется поле ввода с текстовой на "QCheckBox"
     if (role == Qt::EditRole) {
         switch(col) {
-        case 0: subctr[index.row()].setName(value.toString()); break;
-        case 1: subctr[index.row()].setNumberEmpl(value.toInt()); break;
-        case 2: subctr[index.row()].setWorkload(value.toInt()); break;
-        case 3: subctr[index.row()].setLocation(value.toString()); break;
-        case 4: subctr[index.row()].setAdditionalServ(value.toInt()); break;
-        case 5: subctr[index.row()].setPrice(value.toInt()); break;
-        case 6: subctr[index.row()].setExperience(value.toInt()); break;
-        case 7: subctr[index.row()].setCompletedProjects(value.toInt()); break;
-        case 8: subctr[index.row()].setRating(value.toFloat()); break;
+        case 1: subctr[index.row()].setName(value.toString()); break;
+        case 2: subctr[index.row()].setNumberEmpl(value.toInt()); break;
+        case 3: subctr[index.row()].setWorkload(value.toInt()); break;
+        case 4: subctr[index.row()].setLocation(value.toString()); break;
+        case 5: subctr[index.row()].setAdditionalServ(value.toInt()); break;
+        case 6: subctr[index.row()].setPrice(value.toInt()); break;
+        case 7: subctr[index.row()].setExperience(value.toInt()); break;
+        case 8: subctr[index.row()].setCompletedProjects(value.toInt()); break;
+        case 9: subctr[index.row()].setRating(value.toFloat()); break;
         }
 
         // Если модель используют несколько представлений,
@@ -215,6 +216,10 @@ bool MyTableModel::removeRow(const int position)
     return true;
 }
 
+int MyTableModel::howManyRecords() {
+    return subctr.last().getId();
+}
+
 // Задаём заголовки для столбцов и строк таблицы
 QVariant MyTableModel::headerData(int section,
                                   Qt::Orientation orientation,
@@ -224,15 +229,16 @@ QVariant MyTableModel::headerData(int section,
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         // Определяем какой сейчас столбец. Отсчёт идёт от нуля
         switch (section) {
-        case 0: return QString(tr("Name"));
-        case 1: return QString(tr("Number of Employees"));
-        case 2: return QString(tr("Workload"));
-        case 3: return QString(tr("Location"));
-        case 4: return QString(tr("Additional Services"));
-        case 5: return QString(tr("Price"));
-        case 6: return QString(tr("Experience"));
-        case 7: return QString(tr("Completed Projects"));
-        case 8: return QString(tr("Rating"));
+        case 0: return QString(tr("ID"));
+        case 1: return QString(tr("Name"));
+        case 2: return QString(tr("Number of Employees"));
+        case 3: return QString(tr("Workload"));
+        case 4: return QString(tr("Location"));
+        case 5: return QString(tr("Additional Services"));
+        case 6: return QString(tr("Price"));
+        case 7: return QString(tr("Experience"));
+        case 8: return QString(tr("Completed Projects"));
+        case 9: return QString(tr("Rating"));
         }
     }
 
@@ -250,7 +256,7 @@ Qt::ItemFlags MyTableModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
 
-    if (index.isValid())
+    if (index.isValid() && index.column() != 0)
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | Qt::ItemIsEditable | defaultFlags;
     else
         return Qt::ItemIsDropEnabled | defaultFlags;

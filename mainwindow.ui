@@ -52,8 +52,9 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
+    <addaction name="actionPrint"/>
     <addaction name="separator"/>
-    <addaction name="actionExit"/>
+    <addaction name="actionExit_2"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -100,12 +101,13 @@
    <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
+   <addaction name="separator"/>
+   <addaction name="actionPrint"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="app.qrc">
-     <normaloff>:/new/images/new.png</normaloff>:/new/images/new.png</iconset>
+    <iconset theme="document-new"/>
    </property>
    <property name="text">
     <string>&amp;New</string>
@@ -119,8 +121,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="app.qrc">
-     <normaloff>:/new/images/save.png</normaloff>:/new/images/save.png</iconset>
+    <iconset theme="document-save"/>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -131,8 +132,7 @@
   </action>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="app.qrc">
-     <normaloff>:/new/images/open.png</normaloff>:/new/images/open.png</iconset>
+    <iconset theme="document-open"/>
    </property>
    <property name="text">
     <string>&amp;Open</string>
@@ -142,6 +142,9 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset theme="system-shutdown"/>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -154,8 +157,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="app.qrc">
-     <normaloff>:/new/images/cut.png</normaloff>:/new/images/cut.png</iconset>
+    <iconset theme="edit-cut"/>
    </property>
    <property name="text">
     <string>Cu&amp;t</string>
@@ -169,8 +171,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="app.qrc">
-     <normaloff>:/new/images/copy.png</normaloff>:/new/images/copy.png</iconset>
+    <iconset theme="edit-copy"/>
    </property>
    <property name="text">
     <string>&amp;Copy</string>
@@ -181,8 +182,7 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset resource="app.qrc">
-     <normaloff>:/new/images/paste.png</normaloff>:/new/images/paste.png</iconset>
+    <iconset theme="edit-paste"/>
    </property>
    <property name="text">
     <string>&amp;Paste</string>
@@ -219,10 +219,21 @@
     <string>Show</string>
    </property>
   </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset theme="document-print"/>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+  </action>
+  <action name="actionExit_2">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="app.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

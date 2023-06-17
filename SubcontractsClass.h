@@ -7,6 +7,7 @@ using namespace std;
 
 class Subcontracts {
 private:
+    int id;
     QString name;
     int numberEmpl;
     int workload;
@@ -19,9 +20,10 @@ private:
 
 public:
     Subcontracts();
-    Subcontracts(const QString &, int, int, const QString &, int,
+    Subcontracts(int, const QString &, int, int, const QString &, int,
                  int, int, int, float);
 
+    void setId(int id);
     void setName(const QString &n);
     void setNumberEmpl(int num);
     void setWorkload(int w);
@@ -32,6 +34,7 @@ public:
     void setCompletedProjects(int c);
     void setRating(float r);
 
+    int getId() const;
     QString getName() const;
     int getNumberEmpl() const;
     int getWorkload() const;

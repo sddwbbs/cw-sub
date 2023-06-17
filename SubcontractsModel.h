@@ -49,6 +49,8 @@ public:
     bool insertRow(int position, const Subcontracts &value);
     bool removeRow(const int position);
 
+    int howManyRecords();
+
     // Метод, возвращает значение в заголовок таблицы
     QVariant headerData(int section,
                         Qt::Orientation orientation,

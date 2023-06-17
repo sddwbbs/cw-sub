@@ -2,8 +2,9 @@
 
 Subcontracts::Subcontracts() {};
 
-Subcontracts::Subcontracts(const QString &n, int num, int w, const QString &l, int a,
+Subcontracts::Subcontracts(int id, const QString &n, int num, int w, const QString &l, int a,
                            int p, int e, int c, float r) {
+    this->id = id;
     this->name = n;
     this->numberEmpl = num;
     this->workload = w;
@@ -15,6 +16,7 @@ Subcontracts::Subcontracts(const QString &n, int num, int w, const QString &l, i
     this->rating = r;
 }
 
+void Subcontracts::setId(int id) { this->id = id; }
 void Subcontracts::setName(const QString &n) { this->name = n; }
 void Subcontracts::setNumberEmpl(int num) { this->numberEmpl = num; }
 void Subcontracts::setWorkload(int w) { this->workload = w; }
@@ -25,6 +27,7 @@ void Subcontracts::setExperience(int e) { this->experience = e; }
 void Subcontracts::setCompletedProjects(int c) { this->completedProjects = c; }
 void Subcontracts::setRating(float r) { this->rating = r; }
 
+int Subcontracts::getId() const { return this->id; }
 QString Subcontracts::getName() const { return this->name; }
 int Subcontracts::getNumberEmpl() const { return this->numberEmpl; }
 int Subcontracts::getWorkload() const { return this->workload; }

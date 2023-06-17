@@ -7,7 +7,6 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     QTableView(parent)
     , tableModel(new MyTableModel(this))
     , proxyModel(new QSortFilterProxyModel(this))
-    , m_dropRow(0)
 {
     this->key = "10321";
     /* Устанавливаем фокус на таблицу */
@@ -24,6 +23,17 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     /* Подключаем СЛОТ-обработчик для очистки ячейки */
     connect(this, &MdiChildTable::keyPressEvent,
             this, &MdiChildTable::slotClearCell);
+
+    QHeaderView* headerView = this->verticalHeader();
+    headerView->setVisible(false);
+
+    setWindowTitle(userFriendlyCurrentFile());
+    this->setSortingEnabled(true);
+
+    proxyModel->setSourceModel(tableModel);
+    this->setModel(proxyModel);
+
+    this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 void MdiChildTable::keyPressEvent(QKeyEvent *event)
@@ -77,15 +87,16 @@ bool MdiChildTable::loadFile(const QString &fileName)
         }
         Subcontracts newSubctr;
 
-        newSubctr.setName(fields[0]);
-        newSubctr.setNumberEmpl(fields[1].toInt());
-        newSubctr.setWorkload(fields[2].toInt());
-        newSubctr.setLocation(fields[3]);
-        newSubctr.setAdditionalServ(fields[4].toInt());
-        newSubctr.setPrice(fields[5].toInt());
-        newSubctr.setExperience(fields[6].toInt());
-        newSubctr.setCompletedProjects(fields[7].toInt());
-        newSubctr.setRating(fields[8].toFloat());
+        newSubctr.setId(fields[0].toInt());
+        newSubctr.setName(fields[1]);
+        newSubctr.setNumberEmpl(fields[2].toInt());
+        newSubctr.setWorkload(fields[3].toInt());
+        newSubctr.setLocation(fields[4]);
+        newSubctr.setAdditionalServ(fields[5].toInt());
+        newSubctr.setPrice(fields[6].toInt());
+        newSubctr.setExperience(fields[7].toInt());
+        newSubctr.setCompletedProjects(fields[8].toInt());
+        newSubctr.setRating(fields[9].toFloat());
 
         tableModel->insertRow(row, newSubctr);
         row++;
@@ -94,12 +105,6 @@ bool MdiChildTable::loadFile(const QString &fileName)
     file.close();
 
     QApplication::restoreOverrideCursor();
-    setWindowTitle(userFriendlyCurrentFile());
-    this->setSortingEnabled(true);
-
-    proxyModel->setSourceModel(tableModel);
-    this->setModel(proxyModel);
-    this->resizeColumnsToContents();
 
     // Ставим контекстное меню для ячеек
     this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -113,15 +118,16 @@ void MdiChildTable::initTable() {
     QList<Subcontracts> subctr = tableModel->getData();
 
     for (int row = 0; row < tableModel->rowCount(); row++) {
-        tableModel->setData(tableModel->index(row, 0), subctr[row].getName());
-        tableModel->setData(tableModel->index(row, 1), subctr[row].getNumberEmpl());
-        tableModel->setData(tableModel->index(row, 2), subctr[row].getWorkload());
-        tableModel->setData(tableModel->index(row, 3), subctr[row].getLocation());
-        tableModel->setData(tableModel->index(row, 4), subctr[row].getAdditionalServ());
-        tableModel->setData(tableModel->index(row, 5), subctr[row].getPrice());
-        tableModel->setData(tableModel->index(row, 6), subctr[row].getExperience());
-        tableModel->setData(tableModel->index(row, 7), subctr[row].getCompletedProjects());
-        tableModel->setData(tableModel->index(row, 8), subctr[row].getRating());
+        tableModel->setData(tableModel->index(row, 0), subctr[row].getId());
+        tableModel->setData(tableModel->index(row, 1), subctr[row].getName());
+        tableModel->setData(tableModel->index(row, 2), subctr[row].getNumberEmpl());
+        tableModel->setData(tableModel->index(row, 3), subctr[row].getWorkload());
+        tableModel->setData(tableModel->index(row, 4), subctr[row].getLocation());
+        tableModel->setData(tableModel->index(row, 5), subctr[row].getAdditionalServ());
+        tableModel->setData(tableModel->index(row, 6), subctr[row].getPrice());
+        tableModel->setData(tableModel->index(row, 7), subctr[row].getExperience());
+        tableModel->setData(tableModel->index(row, 8), subctr[row].getCompletedProjects());
+        tableModel->setData(tableModel->index(row, 9), subctr[row].getRating());
     }
 }
 
@@ -265,6 +271,7 @@ void MdiChildTable::slotAddRow()
 {
     int row = tableModel->rowCount();
     Subcontracts newSubctr;
+    newSubctr.setId(tableModel->howManyRecords() + 1);
     newSubctr.setName("");
     newSubctr.setNumberEmpl(0);
     newSubctr.setWorkload(0);
@@ -281,9 +288,13 @@ void MdiChildTable::slotAddRow()
 
 void MdiChildTable::slotDeleteRow()
 {
-    int row = this->currentIndex().row();
-    tableModel->removeRow(row);
-    initTable();
+    QModelIndex index = this->currentIndex();
+    int sourceRow = proxyModel->mapToSource(index).row();
+    if (sourceRow >= 0) {
+        tableModel->removeRow(sourceRow);
+        initTable();
+    }
+    //statusBar()->showMessage(tr("Row deleted"));
 }
 
 // Слот для вызова контекстного меню ячейки
@@ -343,4 +354,42 @@ void MdiChildTable::showDiagram()
     newDiagram->show();
 }
 
+void MdiChildTable::printTable(QTableView* tableView)
+{
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setPageSize(QPageSize(QPageSize::A4));
+
+    // Открываем диалог печати, чтобы пользователь мог выбрать принтер и настройки печати
+    QPrintDialog dialog(&printer);
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+
+    // Создаем объект QPainter для рисования на принтере
+    QPainter painter(&printer);
+
+    // Получаем размеры таблицы и количество строк и столбцов
+    int rows = tableView->model()->rowCount();
+    int cols = tableView->model()->columnCount();
+    int w = tableView->viewport()->width();
+    int h = tableView->viewport()->height();
+
+    // Вычисляем масштаб, чтобы таблица занимала всю страницу
+    double xscale = double(printer.pageRect().width()) / double(w);
+    double yscale = double(printer.pageRect().height()) / double(h);
+    double scale = qMin(xscale, yscale);
+
+    // Устанавливаем масштабирование и перенос строк внутри ячеек
+    painter.translate(printer.paperRect().x(), printer.paperRect().y());
+    painter.scale(scale, scale);
+    painter.setPen(Qt::black);
+    painter.setBrush(Qt::NoBrush);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+
+    // Рисуем таблицу
+    tableView->render(&painter);
+
+    // Завершаем рисование
+    painter.end();
+}
 

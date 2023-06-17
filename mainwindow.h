@@ -14,6 +14,9 @@
 #include <QMdiSubWindow>
 #include <QSettings>
 #include <QActionGroup>
+#include <QPrintDialog>
+#include <QPrinter>
+#include <QPainter>
 
 #include "mdichild.h"
 #include "mdichildTable.h"
@@ -59,11 +62,11 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &arg1);
 
-    void on_actionSaveAs_triggered();
-
     void switchLanguage(QAction *action);
 
     void on_actionShow_triggered();
+
+    void on_actionPrint_triggered();
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -77,9 +80,9 @@ private:
 
     void updateActions();
 
-    QMdiSubWindow *findMdiChild(const QString &fileName);
+    QMdiSubWindow *findMdiChild(const QString &fileName, bool db);
 
-    QMdiSubWindow *findMdiChildTable(const QString &fileName);
+//    QMdiSubWindow *findMdiChildTable(const QString &fileName);
 
     void readSettings();
 
