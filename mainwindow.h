@@ -69,7 +69,6 @@ private slots:
     void on_actionPrint_triggered();
 
 protected:
-    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::MainWindow *ui;
@@ -81,8 +80,6 @@ private:
     void updateActions();
 
     QMdiSubWindow *findMdiChild(const QString &fileName, bool db);
-
-//    QMdiSubWindow *findMdiChildTable(const QString &fileName);
 
     void readSettings();
 

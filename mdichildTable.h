@@ -57,15 +57,14 @@ public:
 
     void printTable(QTableView* tableView);
 
-protected:
+    // Проверка нужно ли сохранить документ
+    bool maybeSave();
+
     // Для вопроса о сохранении файла при закрытии дочернего окна,
     // если файл был изменён
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    // Метод проверяет было ли редактирование текста
-    void documentWasModified();
-
     void slotClearCell();
 
     void slotAddRow();
@@ -74,11 +73,14 @@ private slots:
 
     void slotCustomMenuRequested(QPoint pos);
 
+    void onRowsInserted(const QModelIndex &, int, int);
+
+    void onRowsRemoved(const QModelIndex &, int, int);
+
+    void onDataChanged();
+
 private:
     void keyPressEvent(QKeyEvent *event);
-
-    // Проверка нужно ли сохранить документ
-    bool maybeSave();
 
     // Метод делает имя файла как текущий файл
     void setCurrentFile(const QString &fileName);
@@ -95,7 +97,7 @@ private:
 
     QSortFilterProxyModel *proxyModel;
 
-    int m_dropRow;
+    bool isModified;
 };
 
 #endif // MDICHILDTABLE_H

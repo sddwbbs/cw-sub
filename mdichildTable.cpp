@@ -7,6 +7,7 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     QTableView(parent)
     , tableModel(new MyTableModel(this))
     , proxyModel(new QSortFilterProxyModel(this))
+    , isModified(false)
 {
     this->key = "10321";
     /* Устанавливаем фокус на таблицу */
@@ -23,6 +24,10 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     /* Подключаем СЛОТ-обработчик для очистки ячейки */
     connect(this, &MdiChildTable::keyPressEvent,
             this, &MdiChildTable::slotClearCell);
+
+    connect(tableModel, &QAbstractTableModel::dataChanged, this, &MdiChildTable::onDataChanged);
+    connect(tableModel, &QAbstractTableModel::rowsInserted, this, &MdiChildTable::onRowsInserted);
+    connect(tableModel, &QAbstractTableModel::rowsRemoved, this, &MdiChildTable::onRowsRemoved);
 
     QHeaderView* headerView = this->verticalHeader();
     headerView->setVisible(false);
@@ -111,6 +116,7 @@ bool MdiChildTable::loadFile(const QString &fileName)
     connect(this, &MdiChildTable::customContextMenuRequested,
             this, &MdiChildTable::slotCustomMenuRequested);
 
+    isModified = false;
     return true;
 }
 
@@ -238,22 +244,42 @@ QString MdiChildTable::userFriendlyCurrentFile()
     return QFileInfo(curFile).fileName();
 }
 
-// Если дочернее окно закрывается, то надо проверить
-// был ли в нём отредактирован документ, и если да,
-// то предложим пользователю его сохранить
 void MdiChildTable::closeEvent(QCloseEvent *event)
 {
-
+    // Если пользователь нажмёт "Cancel",
+    // то дочернее окно не закроется
+    if (maybeSave())
+        // Окно закрывается
+        event->accept();
+    else
+        // Окно продолжит работать
+        event->ignore();
 }
 
-// В классе QTextEdit, за работу с форматированными данными используется
-// класс QTextDocument, у которого есть механизм определять,
-// было ли редактирование текста или нет. Данный метод узнаёт это и
-// передаёт эти сведенья текущему дочернему окну
-void MdiChildTable::documentWasModified()
+// Проверка, надо ли сохранять файл
+bool MdiChildTable::maybeSave()
 {
-
+    //     Если документ был изменён
+    if (isModified) {
+        // То предложим пользователю его сохранить
+        // или выйти без сохранения
+        QMessageBox::StandardButton ret;
+        ret = QMessageBox::warning(this,
+                                   tr("MDI"),
+                                   tr("'%1' has been modified.\n"
+                                      "Do you want to save your changes?")
+                                       .arg(userFriendlyCurrentFile()),
+                                   QMessageBox::Save | QMessageBox::Discard
+                                       | QMessageBox::Cancel);
+        if (ret == QMessageBox::Save)
+            return save();
+        else if (ret == QMessageBox::Cancel)
+            return false;
+    }
+    return true;
 }
+
+
 
 void MdiChildTable::slotClearCell()
 {
@@ -303,9 +329,9 @@ void MdiChildTable::slotCustomMenuRequested(QPoint pos)
     /* Создаем объект контекстного меню */
     QMenu * menu = new QMenu(this);
     /* Создаём действия для контекстного меню */
-    QAction * clearCell = new QAction(("Очистить ячейку"), this);
-    QAction * addRow = new QAction(("Добавить строку"), this);
-    QAction * deleteRow = new QAction(("Удалить строку"), this);
+    QAction * clearCell = new QAction(("Clear cell"), this);
+    QAction * addRow = new QAction(("Add row"), this);
+    QAction * deleteRow = new QAction(("Delete row"), this);
 
     /* Подключаем СЛОТы обработчики для действий контекстного меню */
     connect(clearCell, &QAction::triggered,
@@ -322,12 +348,6 @@ void MdiChildTable::slotCustomMenuRequested(QPoint pos)
 
     /* Вызываем контекстное меню */
     menu->popup(this->viewport()->mapToGlobal(pos));
-}
-
-// Проверка, надо ли сохранять файл
-bool MdiChildTable::maybeSave()
-{
-    return true;
 }
 
 // Метод делает новый отредактированный файл текущим
@@ -393,3 +413,8 @@ void MdiChildTable::printTable(QTableView* tableView)
     painter.end();
 }
 
+void MdiChildTable::onRowsInserted(const QModelIndex &, int, int) { isModified =  true; }
+
+void MdiChildTable::onRowsRemoved(const QModelIndex &, int, int) { isModified = true; }
+
+void MdiChildTable::onDataChanged() { isModified = true; }

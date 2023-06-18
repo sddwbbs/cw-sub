@@ -22,10 +22,15 @@ public:
 
     // Методы реализующие работу с файлами
     void newFile();
+
     bool loadFile(const QString &fileName);
+
     bool save();
+
     bool saveAs();
+
     bool saveFile(const QString &fileName);
+
     QString currentFile() { return curFile; }
 
 protected:

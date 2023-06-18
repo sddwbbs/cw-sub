@@ -64,7 +64,6 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
 
         // Роль для изменения фона ячейки
     case Qt::BackgroundRole :
-
         // Для всех остальных случаев выдать недопустимый вариант (invalid)
         return QVariant();
 

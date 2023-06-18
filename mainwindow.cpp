@@ -37,8 +37,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionPaste->setEnabled(false);
     ui->actionPrint->setEnabled(false);
     ui->lineEdit->setClearButtonEnabled(true);
-//    ui->label->hide();
-//    ui->lineEdit->hide();
+    ui->lineEdit->setPlaceholderText(tr("Type to search..."));
+    ui->label->hide();
+    ui->lineEdit->hide();
+
+    ui->mainToolBar->setIconSize(QSize(29, 29));
+    ui->mainToolBar->setMovable(true);
 
     // Задаём заголовок окна. Его так же можно через свойства формы
     // в файле mainwindow.ui задать
@@ -209,19 +213,19 @@ MdiChildTable *MainWindow::createMdiChildTable()
 // Так как в этом примере на одном главном окне располагается много
 // отдельных окон в области ui->mdiArea, то перед закрытием главного
 // окна их все надо позакрывать
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    // Пытаемся закрыть все дочерние окна
-    ui->mdiArea->closeAllSubWindows();
-    // Проверяем закрылись ли все дочерние окна.
-    if (ui->mdiArea->currentSubWindow())
-        // Если есть какое-то активное окно,
-        // то ждём пока его закроет пользователь
-        event->ignore();
-    else
-        // Если все окна закрылись, то выходим
-        event->accept();
-}
+//void MainWindow::closeEvent(QCloseEvent *event)
+//{
+//    // Пытаемся закрыть все дочерние окна
+//    ui->mdiArea->closeAllSubWindows();
+//    // Проверяем закрылись ли все дочерние окна.
+//    if (ui->mdiArea->currentSubWindow())
+//        // Если есть какое-то активное окно,
+//        // то ждём пока его закроет пользователь
+//        event->ignore();
+//    else
+//        // Если все окна закрылись, то выходим
+//        event->accept();
+//}
 
 // Метод вытаскивает активное дочернее окно
 MdiChild *MainWindow::activeMdiChild()
@@ -265,13 +269,20 @@ void MainWindow::updateActions()
 
     ui->actionSave->setEnabled(hasChild);
     ui->actionSaveAs->setEnabled(hasChild);
-    ui->menuDiagram->setEnabled(hasChild);
+    ui->menuDiagram->setEnabled(!isTextEdit && hasChild);
     ui->menuEdit->setEnabled(hasChild);
     ui->actionCut->setEnabled(isTextEdit);
     ui->actionCopy->setEnabled(isTextEdit);
     ui->actionPaste->setEnabled(isTextEdit);
     ui->actionPrint->setEnabled(!isTextEdit && hasChild);
     ui->lineEdit->setEnabled(!isTextEdit && hasChild);
+    if (!isTextEdit && hasChild) {
+        ui->label->show();
+        ui->lineEdit->show();
+    } else {
+        ui->label->hide();
+        ui->lineEdit->hide();
+    }
 }
 
 QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName, bool db)
@@ -411,11 +422,9 @@ void MainWindow::on_actionShow_triggered()
 
 void MainWindow::on_actionPrint_triggered()
 {
-    MdiChildTable *activeWindow = activeMdiChildTable();
-    if (!activeWindow) {
+    if(!activeMdiChildTable()) {
         QMessageBox::warning(this, tr("Warning"), tr("There is no windows!"));
         return;
     }
-    activeWindow->printTable(activeWindow);
+    activeMdiChildTable()->printTable(activeMdiChildTable());
 }
-
