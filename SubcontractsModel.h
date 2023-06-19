@@ -31,8 +31,8 @@ public:
 
     QStringList mimeTypes() const override;
 
-    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row,
-                      int column, const QModelIndex &parent) override;
+//    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row,
+//                      int column, const QModelIndex &parent) override;
 
     bool dragDropOverwtiteMode() const;
 

@@ -78,157 +78,187 @@
         <translation>Мое MDI приложение</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="32"/>
         <source>Search</source>
-        <translation>Поиск</translation>
+        <translation type="vanished">Поиск</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="49"/>
+        <location filename="../mainwindow.ui" line="39"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Search:   &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="64"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="60"/>
+        <location filename="../mainwindow.ui" line="76"/>
         <source>&amp;Edit</source>
         <translation>&amp;Изменить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="68"/>
+        <location filename="../mainwindow.ui" line="84"/>
         <source>About</source>
         <translation>Об авторе</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="74"/>
+        <location filename="../mainwindow.ui" line="90"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="79"/>
+        <location filename="../mainwindow.ui" line="95"/>
         <source>Diagram</source>
         <translation>Диаграмма</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="111"/>
+        <location filename="../mainwindow.ui" line="129"/>
         <source>&amp;New</source>
         <translation>&amp;Новый</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="114"/>
+        <location filename="../mainwindow.ui" line="132"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="126"/>
+        <location filename="../mainwindow.ui" line="144"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="129"/>
+        <location filename="../mainwindow.ui" line="147"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="138"/>
+        <location filename="../mainwindow.ui" line="156"/>
         <source>&amp;Open</source>
         <translation>&amp;Открыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="141"/>
+        <location filename="../mainwindow.ui" line="159"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="146"/>
+        <location filename="../mainwindow.ui" line="168"/>
         <source>E&amp;xit</source>
         <translation>В&amp;ыйти</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="149"/>
+        <location filename="../mainwindow.ui" line="171"/>
+        <location filename="../mainwindow.ui" line="261"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="161"/>
+        <location filename="../mainwindow.ui" line="183"/>
         <source>Cu&amp;t</source>
         <translation>Вырезат&amp;ь</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="164"/>
+        <location filename="../mainwindow.ui" line="186"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="176"/>
+        <location filename="../mainwindow.ui" line="198"/>
         <source>&amp;Copy</source>
         <translation>&amp;Копировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="179"/>
+        <location filename="../mainwindow.ui" line="204"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="188"/>
+        <location filename="../mainwindow.ui" line="213"/>
         <source>&amp;Paste</source>
         <translation>&amp;Вставить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="191"/>
+        <location filename="../mainwindow.ui" line="216"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="199"/>
+        <location filename="../mainwindow.ui" line="224"/>
         <source>Save &amp;As...</source>
         <translation>Сохранить &amp;Как...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="204"/>
+        <location filename="../mainwindow.ui" line="229"/>
         <source>About author</source>
         <translation>Об авторе</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="209"/>
+        <location filename="../mainwindow.ui" line="234"/>
         <source>Русский</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="214"/>
-        <location filename="../mainwindow.cpp" line="420"/>
+        <location filename="../mainwindow.ui" line="239"/>
+        <location filename="../mainwindow.cpp" line="386"/>
         <source>English</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="219"/>
+        <location filename="../mainwindow.ui" line="244"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="39"/>
+        <location filename="../mainwindow.ui" line="253"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="258"/>
+        <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="40"/>
+        <source>Type to search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="49"/>
         <source>My MDI Application</source>
         <translation>Мое MDI приложение</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="75"/>
+        <location filename="../mainwindow.cpp" line="85"/>
         <source>Open Document</source>
         <translation>Открыть документ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="96"/>
-        <location filename="../mainwindow.cpp" line="120"/>
+        <location filename="../mainwindow.cpp" line="109"/>
+        <location filename="../mainwindow.cpp" line="132"/>
         <source>File loaded</source>
         <translation>Файл открыт</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="141"/>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../mainwindow.cpp" line="160"/>
         <source>File saved</source>
         <translation>Файл сохранен</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="387"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="426"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="426"/>
+        <source>There is no windows!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -275,38 +305,46 @@ Do you want to save your changes?</source>
 <context>
     <name>MdiChildTable</name>
     <message>
-        <location filename="../mdichildTable.cpp" line="45"/>
-        <location filename="../mdichildTable.cpp" line="72"/>
+        <location filename="../mdichildTable.cpp" line="60"/>
+        <location filename="../mdichildTable.cpp" line="87"/>
+        <location filename="../mdichildTable.cpp" line="268"/>
         <source>MDI</source>
         <translation>MDI</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="46"/>
-        <location filename="../mdichildTable.cpp" line="73"/>
+        <location filename="../mdichildTable.cpp" line="61"/>
+        <location filename="../mdichildTable.cpp" line="88"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Ошибка с чтением файла %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="141"/>
+        <location filename="../mdichildTable.cpp" line="153"/>
         <source>Save Document</source>
         <translation>Сохранить документ</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="157"/>
+        <location filename="../mdichildTable.cpp" line="169"/>
         <source>Application</source>
         <translation>Приложение</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="158"/>
+        <location filename="../mdichildTable.cpp" line="170"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Ошибка записи файла %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="338"/>
+        <location filename="../mdichildTable.cpp" line="269"/>
+        <source>&apos;%1&apos; has been modified.
+Do you want to save your changes?</source>
+        <translation type="unfinished">&apos;%1&apos; был изменен.
+Вы хотите сохранить изменения?</translation>
+    </message>
+    <message>
+        <location filename="../mdichildTable.cpp" line="369"/>
         <source>There is no data for create chart!</source>
         <translation>Нет данных для создания диаграммы!</translation>
     </message>
@@ -314,47 +352,52 @@ Do you want to save your changes?</source>
 <context>
     <name>MyTableModel</name>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="227"/>
+        <location filename="../SubcontractsModel.cpp" line="231"/>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SubcontractsModel.cpp" line="232"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="228"/>
+        <location filename="../SubcontractsModel.cpp" line="233"/>
         <source>Number of Employees</source>
         <translation>Количество работников</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="229"/>
+        <location filename="../SubcontractsModel.cpp" line="234"/>
         <source>Workload</source>
         <translation>Нагрузка</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="230"/>
+        <location filename="../SubcontractsModel.cpp" line="235"/>
         <source>Location</source>
         <translation>Местоположение</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="231"/>
+        <location filename="../SubcontractsModel.cpp" line="236"/>
         <source>Additional Services</source>
         <translation>Дополнительные услуги</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="232"/>
+        <location filename="../SubcontractsModel.cpp" line="237"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="233"/>
+        <location filename="../SubcontractsModel.cpp" line="238"/>
         <source>Experience</source>
         <translation>Опыт</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="234"/>
+        <location filename="../SubcontractsModel.cpp" line="239"/>
         <source>Completed Projects</source>
         <translation>Законченные проекты</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="235"/>
+        <location filename="../SubcontractsModel.cpp" line="240"/>
         <source>Rating</source>
         <translation>Рейтинг</translation>
     </message>
