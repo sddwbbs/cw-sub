@@ -102,6 +102,8 @@ private:
     bool isModified;
 
     bool isUntitled;
+
+    int selectedColumn;
 };
 
 #endif // MDICHILDTABLE_H

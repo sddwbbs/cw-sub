@@ -342,19 +342,31 @@ void MainWindow::on_actionAbout_author_triggered()
     aboutWnd.exec();
 }
 
-void MainWindow::on_lineEdit_textChanged(const QString &text)
-{
+//void MainWindow::on_lineEdit_textChanged(const QString &text)
+//{
+//    MdiChildTable *myTable = activeMdiChildTable();
+
+//    if (!text.isEmpty()) {
+//        if (myTable->currentIndex().isValid()) {
+//            QModelIndex index = myTable->tableFind(text);
+//            myTable->setCurrentIndex(index);
+//        }
+//    }
+//    else
+//        myTable->resetFind();
+//}
+
+void MainWindow::on_lineEdit_textChanged(const QString &text){
     MdiChildTable *myTable = activeMdiChildTable();
 
     if (!text.isEmpty()) {
-        if (myTable->currentIndex().isValid()) {
-            QModelIndex index = myTable->tableFind(text);
-            myTable->setCurrentIndex(index);
-        }
-    }
-    else
+        QModelIndex index = myTable->tableFind(text);
+        myTable->setCurrentIndex(index);
+    } else {
         myTable->resetFind();
+    }
 }
+
 
 void MainWindow::createLanguageMenu()
 {

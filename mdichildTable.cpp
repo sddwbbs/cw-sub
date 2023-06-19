@@ -218,14 +218,32 @@ bool MdiChildTable::saveFile(const QString &fileName)
 }
 
 // Метод реализующий поиск по таблице
+//QModelIndex MdiChildTable::tableFind(const QString &text)
+//{
+//    QModelIndex index = currentIndex();
+
+//    proxyModel->setFilterKeyColumn(index.column());
+//    proxyModel->setFilterFixedString(text);
+
+//    return index;
+//}
+
 QModelIndex MdiChildTable::tableFind(const QString &text)
 {
     QModelIndex index = currentIndex();
 
-    proxyModel->setFilterKeyColumn(index.column());
+    // Если в таблице нет выделенных ячеек, устанавливаем фильтр на указанный столбец
+    if (!index.isValid()) {
+        proxyModel->setFilterKeyColumn(selectedColumn);
+    } else {
+        selectedColumn = index.column();
+        proxyModel->setFilterKeyColumn(selectedColumn);
+    }
+
     proxyModel->setFilterFixedString(text);
 
     return index;
+
 }
 
 void MdiChildTable::dragEnterEvent(QDragEnterEvent *event)
@@ -254,10 +272,22 @@ void MdiChildTable::dropEvent(QDropEvent *event)
 }
 
 
+//void MdiChildTable::resetFind()
+//{
+//    proxyModel->setFilterFixedString(QString());
+//}
+
 void MdiChildTable::resetFind()
 {
     proxyModel->setFilterFixedString(QString());
+
+    // Если в таблице нет выделенных ячеек, сбрасываем фильтр на все столбцы
+    if (!currentIndex().isValid()) {
+        selectedColumn = -1;
+        proxyModel->setFilterKeyColumn(selectedColumn);
+    }
 }
+
 
 // Оставим у файла только его имя. Убираем путь
 QString MdiChildTable::userFriendlyCurrentFile()
