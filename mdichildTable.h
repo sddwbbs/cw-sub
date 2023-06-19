@@ -33,6 +33,8 @@ public:
     explicit MdiChildTable(QWidget *parent = nullptr);
 
     // Методы реализующие работу с файлами
+    void newFile();
+
     bool loadFile(const QString &fileName);
 
     void initTable();
@@ -98,6 +100,8 @@ private:
     QSortFilterProxyModel *proxyModel;
 
     bool isModified;
+
+    bool isUntitled;
 };
 
 #endif // MDICHILDTABLE_H

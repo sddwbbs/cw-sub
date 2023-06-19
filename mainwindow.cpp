@@ -69,7 +69,7 @@ MainWindow::~MainWindow()
 void MainWindow::newFile()
 {
     // Создаём новое окно
-    MdiChild *child = createMdiChild();
+    MdiChildTable *child = createMdiChildTable();
     // Задаём ему базовые параметры
     child->newFile();
     // Выводим его в объекте ui->mdiArea

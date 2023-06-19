@@ -8,6 +8,7 @@ MdiChildTable::MdiChildTable(QWidget *parent):
     , tableModel(new MyTableModel(this))
     , proxyModel(new QSortFilterProxyModel(this))
     , isModified(false)
+    , isUntitled(true)
 {
     this->key = "10321";
     /* Устанавливаем фокус на таблицу */
@@ -48,6 +49,26 @@ void MdiChildTable::keyPressEvent(QKeyEvent *event)
     } else {
         QTableView::keyPressEvent(event);
     }
+}
+
+// Метод создаёт новый пустой файл
+void MdiChildTable::newFile()
+{
+    // Для нумерации создаваемых файлов, пока им не присвоено имя
+    static int sequenceNumber = 1;
+
+    // Ставим метку, что файл без названия
+    isUntitled = true;
+    // Создаём имя документа по умолчанию, с использованием счётчика
+    curFile = tr("untitled%1.db").arg(sequenceNumber++);
+    // Включаем добавление символа "*" в заголовок дочернего окна,
+    // в качестве признака редактирования файла
+    setWindowTitle(curFile + "[*]");
+
+    // Ставим контекстное меню для ячеек
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, &MdiChildTable::customContextMenuRequested,
+            this, &MdiChildTable::slotCustomMenuRequested);
 }
 
 // Стандартная загрузка файла

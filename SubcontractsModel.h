@@ -62,6 +62,8 @@ public:
 
 private:
     QList<Subcontracts> subctr;
+
+    int numberOfRecords;
 };
 
 

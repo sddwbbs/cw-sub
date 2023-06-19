@@ -11,6 +11,7 @@ using namespace std;
 MyTableModel::MyTableModel(QObject *parent):
     QAbstractTableModel(parent)
     , columnsNum(10) // Задаём количество столбцов
+    , numberOfRecords(0)
 {
 
 }
@@ -272,7 +273,12 @@ bool MyTableModel::removeRow(const int position)
 }
 
 int MyTableModel::howManyRecords() {
-    return subctr.last().getId();
+    if (numberOfRecords == 0) {
+        numberOfRecords++;
+        return 0;
+    }
+    numberOfRecords = subctr.last().getId();
+    return numberOfRecords;
 }
 
 // Задаём заголовки для столбцов и строк таблицы
