@@ -94,6 +94,7 @@ bool MdiChildTable::loadFile(const QString &fileName)
     QString keyCheck = in.readLine();
     if (keyCheck != this->key) {
         QApplication::restoreOverrideCursor();
+        QMessageBox::warning(this, tr("Error"), tr("Invalid key!"));
         return false;
     }
     while (!in.atEnd())

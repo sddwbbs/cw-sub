@@ -256,6 +256,8 @@ bool MyTableModel::insertRow(int position, const Subcontracts &value)
 
     subctr.insert(position, value);
 
+    numberOfRecords++;
+
     endInsertRows();
 
     return true;
@@ -263,9 +265,15 @@ bool MyTableModel::insertRow(int position, const Subcontracts &value)
 
 bool MyTableModel::removeRow(const int position)
 {
+    if (numberOfRecords == 0) {
+        return false;
+    }
+
     beginRemoveRows(QModelIndex(), position, position);
 
     subctr.removeAt(position);
+
+    numberOfRecords--;
 
     endRemoveRows();
 

@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, &MainWindow::open);
     connect(ui->actionNew, &QAction::triggered,
             this, &MainWindow::newFile);
+    connect(ui->actionnewTextFile, &QAction::triggered,
+            this, &MainWindow::newTextFile);
     connect(ui->actionSave, &QAction::triggered,
             this, &MainWindow::save);
     connect(ui->actionSaveAs, &QAction::triggered,
@@ -70,6 +72,16 @@ void MainWindow::newFile()
 {
     // Создаём новое окно
     MdiChildTable *child = createMdiChildTable();
+    // Задаём ему базовые параметры
+    child->newFile();
+    // Выводим его в объекте ui->mdiArea
+    child->show();
+}
+
+void MainWindow::newTextFile()
+{
+    // Создаём новое окно
+    MdiChild *child = createMdiChild();
     // Задаём ему базовые параметры
     child->newFile();
     // Выводим его в объекте ui->mdiArea

@@ -42,6 +42,8 @@ public:
 private slots:
     void newFile();
 
+    void newTextFile();
+
     void open();
 
     void save();
