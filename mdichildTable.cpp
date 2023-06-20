@@ -218,17 +218,6 @@ bool MdiChildTable::saveFile(const QString &fileName)
     return true;
 }
 
-// Метод реализующий поиск по таблице
-//QModelIndex MdiChildTable::tableFind(const QString &text)
-//{
-//    QModelIndex index = currentIndex();
-
-//    proxyModel->setFilterKeyColumn(index.column());
-//    proxyModel->setFilterFixedString(text);
-
-//    return index;
-//}
-
 QModelIndex MdiChildTable::tableFind(const QString &text)
 {
     QModelIndex index = currentIndex();
@@ -271,12 +260,6 @@ void MdiChildTable::dropEvent(QDropEvent *event)
         event->acceptProposedAction();
     }
 }
-
-
-//void MdiChildTable::resetFind()
-//{
-//    proxyModel->setFilterFixedString(QString());
-//}
 
 void MdiChildTable::resetFind()
 {

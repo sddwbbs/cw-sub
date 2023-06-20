@@ -17,7 +17,6 @@
 #include <QPrinter>
 #include <QPainter>
 
-#include "SubcontractsClass.h"
 #include "SubcontractsModel.h"
 
 class QSortFilterProxyModel;

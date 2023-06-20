@@ -94,7 +94,7 @@ void MainWindow::open()
     QFileDialog *fDialog = new QFileDialog(this);
     fDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    QString fileName = fDialog->getOpenFileName(this, tr("Open Document"), QDir::cleanPath("../cw-sub/data"),
+    QString fileName = fDialog->getOpenFileName(this, tr("Open Document"), QDir::cleanPath("../cw-sub_mdi/data"),
                                                 "Text Files (*.txt *.db)", nullptr, QFileDialog::DontUseNativeDialog);
 
     QFileInfo fileinfo(fileName);
@@ -222,23 +222,6 @@ MdiChildTable *MainWindow::createMdiChildTable()
     return child;
 }
 
-// Так как в этом примере на одном главном окне располагается много
-// отдельных окон в области ui->mdiArea, то перед закрытием главного
-// окна их все надо позакрывать
-//void MainWindow::closeEvent(QCloseEvent *event)
-//{
-//    // Пытаемся закрыть все дочерние окна
-//    ui->mdiArea->closeAllSubWindows();
-//    // Проверяем закрылись ли все дочерние окна.
-//    if (ui->mdiArea->currentSubWindow())
-//        // Если есть какое-то активное окно,
-//        // то ждём пока его закроет пользователь
-//        event->ignore();
-//    else
-//        // Если все окна закрылись, то выходим
-//        event->accept();
-//}
-
 // Метод вытаскивает активное дочернее окно
 MdiChild *MainWindow::activeMdiChild()
 {
@@ -353,20 +336,6 @@ void MainWindow::on_actionAbout_author_triggered()
     About aboutWnd(this);
     aboutWnd.exec();
 }
-
-//void MainWindow::on_lineEdit_textChanged(const QString &text)
-//{
-//    MdiChildTable *myTable = activeMdiChildTable();
-
-//    if (!text.isEmpty()) {
-//        if (myTable->currentIndex().isValid()) {
-//            QModelIndex index = myTable->tableFind(text);
-//            myTable->setCurrentIndex(index);
-//        }
-//    }
-//    else
-//        myTable->resetFind();
-//}
 
 void MainWindow::on_lineEdit_textChanged(const QString &text){
     MdiChildTable *myTable = activeMdiChildTable();

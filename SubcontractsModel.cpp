@@ -77,78 +77,6 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-//===============================================================================================
-
-//QMimeData *MyTableModel::mimeData(const QModelIndexList &indexes) const
-//{
-//    QMimeData *mimeData = new QMimeData();
-//    QByteArray encodedData;
-//    QDataStream stream(&encodedData, QIODevice::WriteOnly);
-//    foreach(const QModelIndex &index, indexes) {
-//        if(index.isValid()) {
-//            QString text = data(index, Qt::DisplayRole).toString();
-//            stream << text;
-//        }
-//    }
-//    mimeData->setData("text/plain", encodedData);
-//    return mimeData;
-//}
-
-//QStringList MyTableModel::mimeTypes() const
-//{
-//    QStringList types;
-//    types << "text/plain";
-//    return types;
-//}
-
-//bool MyTableModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
-//                                int row, int column, const QModelIndex &parent)
-//{
-//    qDebug() << action;
-//    if(action == Qt::IgnoreAction)
-//        return true;
-//    if(!data->hasFormat("text/plain"))
-//        return false;
-//    if(column > 0)
-//        return false;
-//    int beginRow;
-//    if(row != -1)
-//        beginRow = row;
-//    else if(parent.isValid())
-//        beginRow = parent.row();
-//    else
-//        beginRow = rowCount(QModelIndex());
-//    QByteArray encodedData = data->data("text/plain");
-//    QDataStream stream(&encodedData, QIODevice::ReadOnly);
-//    QStringList newItems;
-//    int rows = 0;
-//    while(!stream.atEnd()) {
-//        QString text;
-//        stream >> text;
-//        newItems << text;
-//        ++rows;
-//    }
-//    insertRows(beginRow, rows, QModelIndex());
-//    foreach(const QString &text, newItems) {
-//        QModelIndex idx = index(beginRow, column, QModelIndex());
-//        setData(idx, text);
-//        beginRow++;
-//    }
-//    return true;
-//}
-
-//bool MyTableModel::dragDropOverwtiteMode() const
-//{
-//    return false;
-//}
-
-//Qt::DropActions MyTableModel::supportedDropActions() const
-//{
-//    return Qt::CopyAction | Qt::MoveAction;
-//}
-
-//===============================================================================================
-
 QStringList MyTableModel::mimeTypes() const
 {
     QStringList types;
@@ -170,26 +98,6 @@ QMimeData *MyTableModel::mimeData(const QModelIndexList &indexes) const
     mimeData->setData("text/plain", encodedData);
     return mimeData;
 }
-
-//QMimeData *MyTableModel::mimeData(const QModelIndexList &indexes) const
-//{
-//    QMimeData *mimeData = new QMimeData();
-//    QByteArray encodedData;
-//    QDataStream stream(&encodedData, QIODevice::WriteOnly);
-
-//    foreach(const QModelIndex &index, indexes) {
-//        if(index.isValid()) {
-//            QString text = data(index, Qt::DisplayRole).toString();
-//            stream << text;
-
-//            // Добавляем информацию о позиции ячейки
-//            stream << index.row() << index.column();
-//        }
-//    }
-
-//    mimeData->setData("text/plain", encodedData);
-//    return mimeData;
-//}
 
 Qt::DropActions MyTableModel::supportedDropActions() const
 {
