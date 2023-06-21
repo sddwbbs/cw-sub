@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qApp->installTranslator(&appTranslator);
     qApp->installTranslator(&qtTranslator);
 
-    qmPath = "../cw-sub/translations";
+    qmPath = "../cw-sub_mdi/translations";
 
     createLanguageMenu();
 

@@ -78,7 +78,7 @@
         <translation type="vanished">Suchen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="39"/>
+        <location filename="../mainwindow.ui" line="25"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Search:   &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -108,151 +108,166 @@
         <translation>Diagramm</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="129"/>
+        <location filename="../mainwindow.ui" line="130"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="132"/>
+        <location filename="../mainwindow.ui" line="133"/>
+        <source>New table file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="136"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="144"/>
+        <location filename="../mainwindow.ui" line="148"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="147"/>
+        <location filename="../mainwindow.ui" line="151"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="156"/>
+        <location filename="../mainwindow.ui" line="160"/>
         <source>&amp;Open</source>
         <translation>&amp;Offen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="159"/>
+        <location filename="../mainwindow.ui" line="163"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="168"/>
+        <location filename="../mainwindow.ui" line="172"/>
         <source>E&amp;xit</source>
         <translation>A&amp;usfahrt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="171"/>
-        <location filename="../mainwindow.ui" line="261"/>
+        <location filename="../mainwindow.ui" line="175"/>
+        <location filename="../mainwindow.ui" line="265"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="183"/>
+        <location filename="../mainwindow.ui" line="187"/>
         <source>Cu&amp;t</source>
         <translation>Schneide&amp;n</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="186"/>
+        <location filename="../mainwindow.ui" line="190"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="198"/>
+        <location filename="../mainwindow.ui" line="202"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="204"/>
+        <location filename="../mainwindow.ui" line="208"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="213"/>
+        <location filename="../mainwindow.ui" line="217"/>
         <source>&amp;Paste</source>
         <translation>&amp;Paste</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="216"/>
+        <location filename="../mainwindow.ui" line="220"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="224"/>
+        <location filename="../mainwindow.ui" line="228"/>
         <source>Save &amp;As...</source>
         <translation>Speichern &amp;Аls...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="229"/>
+        <location filename="../mainwindow.ui" line="233"/>
         <source>About author</source>
         <translation>Über den Autor</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="234"/>
+        <location filename="../mainwindow.ui" line="238"/>
         <source>Русский</source>
         <translation>Deutsch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="239"/>
-        <location filename="../mainwindow.cpp" line="386"/>
+        <location filename="../mainwindow.ui" line="243"/>
+        <location filename="../mainwindow.cpp" line="379"/>
         <source>English</source>
         <translation>Deutsch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="244"/>
+        <location filename="../mainwindow.ui" line="248"/>
         <source>Show</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="253"/>
+        <location filename="../mainwindow.ui" line="257"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="258"/>
+        <location filename="../mainwindow.ui" line="262"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="40"/>
+        <location filename="../mainwindow.ui" line="274"/>
+        <source>newTextFile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="277"/>
+        <source>New text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="42"/>
         <source>Type to search...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="49"/>
+        <location filename="../mainwindow.cpp" line="51"/>
         <source>My MDI Application</source>
         <translation>Meine MDI-Anwendung</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="85"/>
+        <location filename="../mainwindow.cpp" line="97"/>
         <source>Open Document</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="109"/>
-        <location filename="../mainwindow.cpp" line="132"/>
+        <location filename="../mainwindow.cpp" line="121"/>
+        <location filename="../mainwindow.cpp" line="144"/>
         <source>File loaded</source>
         <translation>Datei geladen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="152"/>
-        <location filename="../mainwindow.cpp" line="160"/>
+        <location filename="../mainwindow.cpp" line="164"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source>File saved</source>
         <translation>Datei gespeichert</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="387"/>
+        <location filename="../mainwindow.cpp" line="380"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="426"/>
+        <location filename="../mainwindow.cpp" line="419"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="426"/>
+        <location filename="../mainwindow.cpp" line="419"/>
         <source>There is no windows!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -301,46 +316,61 @@ Möchtest du deine Änderungen speichern?</translation>
 <context>
     <name>MdiChildTable</name>
     <message>
-        <location filename="../mdichildTable.cpp" line="60"/>
-        <location filename="../mdichildTable.cpp" line="87"/>
-        <location filename="../mdichildTable.cpp" line="268"/>
+        <location filename="../mdichildTable.cpp" line="63"/>
+        <source>untitled%1.db</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mdichildTable.cpp" line="81"/>
+        <location filename="../mdichildTable.cpp" line="109"/>
+        <location filename="../mdichildTable.cpp" line="303"/>
         <source>MDI</source>
         <translation>MDI</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="61"/>
-        <location filename="../mdichildTable.cpp" line="88"/>
+        <location filename="../mdichildTable.cpp" line="82"/>
+        <location filename="../mdichildTable.cpp" line="110"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Datei %1 kann nicht gelesen werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="153"/>
+        <location filename="../mdichildTable.cpp" line="97"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mdichildTable.cpp" line="97"/>
+        <source>Invalid key!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mdichildTable.cpp" line="175"/>
         <source>Save Document</source>
         <translation>Dokument speichern</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="169"/>
+        <location filename="../mdichildTable.cpp" line="191"/>
         <source>Application</source>
         <translation>Anwendung</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="170"/>
+        <location filename="../mdichildTable.cpp" line="192"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Datei %1 kann nicht geschrieben werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="269"/>
+        <location filename="../mdichildTable.cpp" line="304"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished">&apos;%1&apos; wurde geändert.
 Möchtest du deine Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../mdichildTable.cpp" line="369"/>
+        <location filename="../mdichildTable.cpp" line="404"/>
         <source>There is no data for create chart!</source>
         <translation>Es sind keine Daten zum Erstellen eines Diagramms vorhanden!</translation>
     </message>
@@ -348,52 +378,52 @@ Möchtest du deine Änderungen speichern?</translation>
 <context>
     <name>MyTableModel</name>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="231"/>
+        <location filename="../SubcontractsModel.cpp" line="209"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="232"/>
+        <location filename="../SubcontractsModel.cpp" line="210"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="233"/>
+        <location filename="../SubcontractsModel.cpp" line="211"/>
         <source>Number of Employees</source>
         <translation>Anzahl der Mitarbeiter</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="234"/>
+        <location filename="../SubcontractsModel.cpp" line="212"/>
         <source>Workload</source>
         <translation>Arbeitsbelastung</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="235"/>
+        <location filename="../SubcontractsModel.cpp" line="213"/>
         <source>Location</source>
         <translation>Standort</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="236"/>
+        <location filename="../SubcontractsModel.cpp" line="214"/>
         <source>Additional Services</source>
         <translation>Zusatzleitungen</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="237"/>
+        <location filename="../SubcontractsModel.cpp" line="215"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="238"/>
+        <location filename="../SubcontractsModel.cpp" line="216"/>
         <source>Experience</source>
         <translation>Erfahrung</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="239"/>
+        <location filename="../SubcontractsModel.cpp" line="217"/>
         <source>Completed Projects</source>
         <translation>Fertige Projekte</translation>
     </message>
     <message>
-        <location filename="../SubcontractsModel.cpp" line="240"/>
+        <location filename="../SubcontractsModel.cpp" line="218"/>
         <source>Rating</source>
         <translation>Bewertung</translation>
     </message>
