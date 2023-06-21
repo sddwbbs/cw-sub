@@ -236,31 +236,6 @@ QModelIndex MdiChildTable::tableFind(const QString &text)
 
 }
 
-//void MdiChildTable::dragEnterEvent(QDragEnterEvent *event)
-//{
-//    if (event->mimeData()->hasFormat("text/plain")) {
-//        event->acceptProposedAction();
-//    }
-//}
-
-//void MdiChildTable::dropEvent(QDropEvent *event)
-//{
-//    if (event->mimeData()->hasFormat("text/plain")) {
-//        QByteArray encodedData = event->mimeData()->data("text/plain");
-//        QDataStream stream(&encodedData, QIODevice::ReadOnly);
-//        int row = this->indexAt(event->pos()).row();
-//        int col = this->indexAt(event->pos()).column();
-//        while (!stream.atEnd()) {
-//            QString text;
-//            stream >> text;
-//            QModelIndex index = model()->index(row, col);
-//            model()->setData(index, text, Qt::EditRole);
-//            row++;
-//        }
-//        event->acceptProposedAction();
-//    }
-//}
-
 void MdiChildTable::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat("text/plain")) {
@@ -440,45 +415,6 @@ void MdiChildTable::showDiagram()
     EmpDiagram *newDiagram = new EmpDiagram(this, subctr);
     newDiagram->show();
 }
-
-//void MdiChildTable::printTable(QTableView* tableView)
-//{
-//    QPrinter printer(QPrinter::HighResolution);
-//    printer.setPageSize(QPageSize(QPageSize::A4));
-
-//    // Открываем диалог печати, чтобы пользователь мог выбрать принтер и настройки печати
-//    QPrintDialog dialog(&printer);
-//    if (dialog.exec() != QDialog::Accepted) {
-//        return;
-//    }
-
-//    // Создаем объект QPainter для рисования на принтере
-//    QPainter painter(&printer);
-
-//    // Получаем размеры таблицы и количество строк и столбцов
-//    int rows = tableView->model()->rowCount();
-//    int cols = tableView->model()->columnCount();
-//    int w = tableView->viewport()->width();
-//    int h = tableView->viewport()->height();
-
-//    // Вычисляем масштаб, чтобы таблица занимала всю страницу
-//    double xscale = double(printer.pageRect().width()) / double(w);
-//    double yscale = double(printer.pageRect().height()) / double(h);
-//    double scale = qMin(xscale, yscale);
-
-//    // Устанавливаем масштабирование и перенос строк внутри ячеек
-//    painter.translate(printer.paperRect().x(), printer.paperRect().y());
-//    painter.scale(scale, scale);
-//    painter.setPen(Qt::black);
-//    painter.setBrush(Qt::NoBrush);
-//    painter.setRenderHint(QPainter::Antialiasing, true);
-
-//    // Рисуем таблицу
-//    tableView->render(&painter);
-
-//    // Завершаем рисование
-//    painter.end();
-//}
 
 void MdiChildTable::printTable(QTableView* tableView) {
     QPrinter printer(QPrinter::HighResolution);

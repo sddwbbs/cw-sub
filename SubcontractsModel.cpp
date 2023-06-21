@@ -77,38 +77,6 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-//QStringList MyTableModel::mimeTypes() const
-//{
-//    QStringList types;
-//    types << "text/plain";
-//    return types;
-//}
-
-//QMimeData *MyTableModel::mimeData(const QModelIndexList &indexes) const
-//{
-//    QMimeData *mimeData = new QMimeData();
-//    QByteArray encodedData;
-//    QDataStream stream(&encodedData, QIODevice::WriteOnly);
-//    foreach(const QModelIndex &index, indexes) {
-//        if(index.isValid()) {
-//            QString text = data(index, Qt::DisplayRole).toString();
-//            stream << text;
-//        }
-//    }
-//    mimeData->setData("text/plain", encodedData);
-//    return mimeData;
-//}
-
-//Qt::DropActions MyTableModel::supportedDropActions() const
-//{
-//    return Qt::CopyAction | Qt::MoveAction;
-//}
-
-//bool MyTableModel::dragDropOverwtiteMode() const
-//{
-//    return false;
-//}
-
 QStringList MyTableModel::mimeTypes() const
 {
     QStringList types;
