@@ -77,6 +77,38 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+//QStringList MyTableModel::mimeTypes() const
+//{
+//    QStringList types;
+//    types << "text/plain";
+//    return types;
+//}
+
+//QMimeData *MyTableModel::mimeData(const QModelIndexList &indexes) const
+//{
+//    QMimeData *mimeData = new QMimeData();
+//    QByteArray encodedData;
+//    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+//    foreach(const QModelIndex &index, indexes) {
+//        if(index.isValid()) {
+//            QString text = data(index, Qt::DisplayRole).toString();
+//            stream << text;
+//        }
+//    }
+//    mimeData->setData("text/plain", encodedData);
+//    return mimeData;
+//}
+
+//Qt::DropActions MyTableModel::supportedDropActions() const
+//{
+//    return Qt::CopyAction | Qt::MoveAction;
+//}
+
+//bool MyTableModel::dragDropOverwtiteMode() const
+//{
+//    return false;
+//}
+
 QStringList MyTableModel::mimeTypes() const
 {
     QStringList types;
@@ -87,15 +119,16 @@ QStringList MyTableModel::mimeTypes() const
 QMimeData *MyTableModel::mimeData(const QModelIndexList &indexes) const
 {
     QMimeData *mimeData = new QMimeData();
-    QByteArray encodedData;
-    QDataStream stream(&encodedData, QIODevice::WriteOnly);
-    foreach(const QModelIndex &index, indexes) {
-        if(index.isValid()) {
+    QStringList textList;
+
+    foreach (const QModelIndex &index, indexes) {
+        if (index.isValid()) {
             QString text = data(index, Qt::DisplayRole).toString();
-            stream << text;
+            textList.append(text);
         }
     }
-    mimeData->setData("text/plain", encodedData);
+
+    mimeData->setData("text/plain", textList.join(";").toUtf8());
     return mimeData;
 }
 
@@ -108,6 +141,7 @@ bool MyTableModel::dragDropOverwtiteMode() const
 {
     return false;
 }
+
 
 // Делаем вставку, введённых пользователем данных из ячейки
 // в контейнеры "listStrA" и "listStrB",
@@ -236,7 +270,7 @@ Qt::ItemFlags MyTableModel::flags(const QModelIndex &index) const
     if (index.isValid() && index.column() != 0)
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | Qt::ItemIsEditable | defaultFlags;
     else
-        return Qt::ItemIsDropEnabled | defaultFlags;
+        return Qt::ItemIsDropEnabled | Qt::ItemIsEnabled;
 }
 
 QModelIndex MyTableModel::index(int row, int column, const QModelIndex &) const {

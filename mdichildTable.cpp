@@ -236,6 +236,31 @@ QModelIndex MdiChildTable::tableFind(const QString &text)
 
 }
 
+//void MdiChildTable::dragEnterEvent(QDragEnterEvent *event)
+//{
+//    if (event->mimeData()->hasFormat("text/plain")) {
+//        event->acceptProposedAction();
+//    }
+//}
+
+//void MdiChildTable::dropEvent(QDropEvent *event)
+//{
+//    if (event->mimeData()->hasFormat("text/plain")) {
+//        QByteArray encodedData = event->mimeData()->data("text/plain");
+//        QDataStream stream(&encodedData, QIODevice::ReadOnly);
+//        int row = this->indexAt(event->pos()).row();
+//        int col = this->indexAt(event->pos()).column();
+//        while (!stream.atEnd()) {
+//            QString text;
+//            stream >> text;
+//            QModelIndex index = model()->index(row, col);
+//            model()->setData(index, text, Qt::EditRole);
+//            row++;
+//        }
+//        event->acceptProposedAction();
+//    }
+//}
+
 void MdiChildTable::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat("text/plain")) {
@@ -246,20 +271,27 @@ void MdiChildTable::dragEnterEvent(QDragEnterEvent *event)
 void MdiChildTable::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasFormat("text/plain")) {
-        QByteArray encodedData = event->mimeData()->data("text/plain");
-        QDataStream stream(&encodedData, QIODevice::ReadOnly);
+        QString text = QString::fromUtf8(event->mimeData()->data("text/plain"));
+        QStringList textList = text.split(";");
+
         int row = this->indexAt(event->pos()).row();
         int col = this->indexAt(event->pos()).column();
-        while (!stream.atEnd()) {
-            QString text;
-            stream >> text;
+
+        foreach (const QString &text, textList) {
             QModelIndex index = model()->index(row, col);
+
+            if (index == QModelIndex()) {
+                return;
+            }
+
             model()->setData(index, text, Qt::EditRole);
-            row++;
+            col++;
         }
+
         event->acceptProposedAction();
     }
 }
+
 
 void MdiChildTable::resetFind()
 {
@@ -409,43 +441,105 @@ void MdiChildTable::showDiagram()
     newDiagram->show();
 }
 
-void MdiChildTable::printTable(QTableView* tableView)
-{
-    QPrinter printer(QPrinter::HighResolution);
-    printer.setPageSize(QPageSize(QPageSize::A4));
+//void MdiChildTable::printTable(QTableView* tableView)
+//{
+//    QPrinter printer(QPrinter::HighResolution);
+//    printer.setPageSize(QPageSize(QPageSize::A4));
 
-    // Открываем диалог печати, чтобы пользователь мог выбрать принтер и настройки печати
-    QPrintDialog dialog(&printer);
-    if (dialog.exec() != QDialog::Accepted) {
+//    // Открываем диалог печати, чтобы пользователь мог выбрать принтер и настройки печати
+//    QPrintDialog dialog(&printer);
+//    if (dialog.exec() != QDialog::Accepted) {
+//        return;
+//    }
+
+//    // Создаем объект QPainter для рисования на принтере
+//    QPainter painter(&printer);
+
+//    // Получаем размеры таблицы и количество строк и столбцов
+//    int rows = tableView->model()->rowCount();
+//    int cols = tableView->model()->columnCount();
+//    int w = tableView->viewport()->width();
+//    int h = tableView->viewport()->height();
+
+//    // Вычисляем масштаб, чтобы таблица занимала всю страницу
+//    double xscale = double(printer.pageRect().width()) / double(w);
+//    double yscale = double(printer.pageRect().height()) / double(h);
+//    double scale = qMin(xscale, yscale);
+
+//    // Устанавливаем масштабирование и перенос строк внутри ячеек
+//    painter.translate(printer.paperRect().x(), printer.paperRect().y());
+//    painter.scale(scale, scale);
+//    painter.setPen(Qt::black);
+//    painter.setBrush(Qt::NoBrush);
+//    painter.setRenderHint(QPainter::Antialiasing, true);
+
+//    // Рисуем таблицу
+//    tableView->render(&painter);
+
+//    // Завершаем рисование
+//    painter.end();
+//}
+
+void MdiChildTable::printTable(QTableView* tableView) {
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(QDir::currentPath() + "/print.pdf");
+
+    QList<Subcontracts> subctr = tableModel->getData();
+
+    // Создаем диалоговое окно печати и устанавливаем настройки принтера
+    QPrintDialog printDialog(&printer, nullptr);
+    if (printDialog.exec() == QDialog::Rejected) {
         return;
     }
 
-    // Создаем объект QPainter для рисования на принтере
-    QPainter painter(&printer);
+    QString htmlTable;
+    htmlTable = "<table border=1 cellspacing=0>\n"
+                "<caption>Таблица субподрядчиков строительной фирмы</caption>\n"
+                "<tr>\n"
+                "<th>ID</th>\n"
+                "<th>Название</th>\n"
+                "<th>Количество работников</th>\n"
+                "<th>Нагрузка</th>\n"
+                "<th>Местоположение</th>\n"
+                "<th>Дополнительные услуги</th>\n"
+                "<th>Цена</th>\n"
+                "<th>Опыт</th>\n"
+                "<th>Завершенных проектов</th>\n"
+                "<th>Рейтинг</th>\n"
+                "</tr>\n";
 
-    // Получаем размеры таблицы и количество строк и столбцов
-    int rows = tableView->model()->rowCount();
-    int cols = tableView->model()->columnCount();
-    int w = tableView->viewport()->width();
-    int h = tableView->viewport()->height();
 
-    // Вычисляем масштаб, чтобы таблица занимала всю страницу
-    double xscale = double(printer.pageRect().width()) / double(w);
-    double yscale = double(printer.pageRect().height()) / double(h);
-    double scale = qMin(xscale, yscale);
+    for (const auto& temp : subctr) {
+        QString id = QString::number(temp.getId());
+        QString numberEmp = QString::number(temp.getNumberEmpl());
+        QString workload = QString::number(temp.getWorkload());
+        QString additionalServ = QString::number(temp.getAdditionalServ());
+        QString price = QString::number(temp.getPrice());
+        QString experience = QString::number(temp.getExperience());
+        QString completedProjects = QString::number(temp.getCompletedProjects());
+        QString rating = QString::number(temp.getRating());
 
-    // Устанавливаем масштабирование и перенос строк внутри ячеек
-    painter.translate(printer.paperRect().x(), printer.paperRect().y());
-    painter.scale(scale, scale);
-    painter.setPen(Qt::black);
-    painter.setBrush(Qt::NoBrush);
-    painter.setRenderHint(QPainter::Antialiasing, true);
+        htmlTable += "<tr><td>" + id + "</td><td>" +
+                     temp.getName() + "</td><td>" +
+                     numberEmp + "</td><td>" +
+                     workload + "</td><td>" +
+                     temp.getLocation() + "</td><td>" +
+                     additionalServ + "</td><td>" +
+                     price + "</td><td>" +
+                     experience + "</td><td>" +
+                     completedProjects + "</td><td>" +
+                     rating + "</td></tr>\n";
+    }
+    htmlTable += "</table>\n<br>\n";
 
-    // Рисуем таблицу
-    tableView->render(&painter);
+    QTextDocument document;
+    document.setHtml(htmlTable);
+    document.print(&printer);
 
-    // Завершаем рисование
-    painter.end();
+    document.end();
+
+    return;
 }
 
 void MdiChildTable::onRowsInserted(const QModelIndex &, int, int) { isModified =  true; }
