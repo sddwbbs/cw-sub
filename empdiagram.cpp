@@ -35,7 +35,7 @@ EmpDiagram::~EmpDiagram()
 void EmpDiagram::createDiagram(QList<Subcontracts> values) {
     std::vector<int> employees(5, 0);
 
-    foreach (auto elem, values) {
+    for (const auto &elem : values) {
         int temp = elem.getNumberEmpl();
 
         if (temp >= 0 && temp <= 10) {

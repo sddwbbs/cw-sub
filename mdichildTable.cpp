@@ -215,6 +215,9 @@ bool MdiChildTable::saveFile(const QString &fileName)
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
+
+    this->isModified = false;
+
     return true;
 }
 
